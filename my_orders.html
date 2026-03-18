@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}My Orders - Ecommerce Brand{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 40px 20px;">
+    <h1 style="font-size: 28px; margin-bottom: 30px; color: #333;">My Orders</h1>
+    
+    <div style="display: grid; grid-template-columns: 250px 1fr; gap: 30px;">
+        
+        <!-- Sidebar -->
+        <aside style="background: white; padding: 20px; border-radius: 8px; height: fit-content; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <div style="text-align: center; padding: 20px 0; border-bottom: 1px solid #eee; margin-bottom: 20px;">
+                <div style="width: 80px; height: 80px; background: #1976d2; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
+                    <i class="fas fa-user" style="font-size: 40px; color: white;"></i>
+                </div>
+                <h3 style="font-size: 18px; color: #333; margin-bottom: 5px;">{{ session.get('username', 'User') }}</h3>
+                <p style="font-size: 14px; color: #666;">Member since 2024</p>
+            </div>
+            
+            <nav>
+                <a href="{{ url_for('profile') }}" style="display: block; padding: 12px 15px; color: #666; text-decoration: none; margin-bottom: 5px;">
+                    <i class="fas fa-user" style="margin-right: 8px;"></i> Profile Information
+                </a>
+                <a href="{{ url_for('my_orders') }}" style="display: block; padding: 12px 15px; color: #1976d2; background: #e3f2fd; border-radius: 4px; text-decoration: none; margin-bottom: 5px; font-weight: 500;">
+                    <i class="fas fa-box" style="margin-right: 8px;"></i> My Orders
+                </a>
+                <a href="{{ url_for('logout') }}" style="display: block; padding: 12px 15px; color: #f44336; text-decoration: none; margin-bottom: 5px;">
+                    <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i> Logout
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Orders Content -->
+        <main>
+            {% if orders %}
+                {% for order in orders %}
+                <div style="background: white; border-radius: 8px; padding: 25px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #eee;">
+                        <div>
+                            <h3 style="font-size: 18px; color: #333; margin-bottom: 5px;">
+                                Order #{{ order.id }}
+                            </h3>
+                            <p style="font-size: 14px; color: #666;">
+                                <i class="fas fa-calendar"></i> {{ order.created_at.strftime('%B %d, %Y') }}
+                            </p>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="display: inline-block; padding: 6px 15px; background: {% if order.status == 'delivered' %}#e8f5e9{% elif order.status == 'shipped' %}#e3f2fd{% else %}#ffebee{% endif %}; 
+                                        color: {% if order.status == 'delivered' %}#4caf50{% elif order.status == 'shipped' %}#1976d2{% else %}#f44336{% endif %}; 
+                                        border-radius: 20px; font-size: 13px; font-weight: 600; text-transform: uppercase;">
+                                {{ order.status }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 15px; border-top: 2px solid #eee;">
+                        <div>
+                            <p style="font-size: 14px; color: #666; margin-bottom: 5px;">Total Amount:</p>
+                            <p style="font-size: 20px; font-weight: bold; color: #4caf50;">${{ "%.2f"|format(order.total_price) }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div style="text-align: center; padding: 60px 20px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <i class="fas fa-box-open" style="font-size: 80px; color: #ddd; margin-bottom: 20px;"></i>
+                    <h3 style="color: #666; margin-bottom: 10px;">No orders yet</h3>
+                    <p style="color: #999; margin-bottom: 20px;">Start shopping to see your orders here!</p>
+                    <a href="{{ url_for('products') }}" 
+                       style="display: inline-block; padding: 12px 30px; background: #1976d2; color: white; text-decoration: none; border-radius: 4px; font-size: 16px; font-weight: 600;">
+                        <i class="fas fa-shopping-bag"></i> Start Shopping
+                    </a>
+                </div>
+            {% endif %}
+        </main>
+    </div>
+</div>
+{% endblock %}

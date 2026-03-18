@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Ecommerce Brand{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- ✅ RESPONSIVE CSS (Added for Mobile Testing) -->
+    <style>
+        /* Mobile Responsive Styles */
+        @media (max-width: 1024px) {
+            .header-top {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            
+            .search-bar {
+                width: 100%;
+                order: 3;
+            }
+            
+            .search-bar form {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .search-bar input {
+                flex: 1;
+                min-width: 200px;
+            }
+            
+            .header-actions {
+                gap: 10px;
+            }
+            
+            .header-actions a {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .header-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .logo {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+            
+            .search-bar {
+                width: 100%;
+                order: 3;
+            }
+            
+            .search-bar form {
+                width: 100%;
+                flex-direction: column;
+            }
+            
+            .search-bar input,
+            .search-bar select,
+            .search-bar button {
+                width: 100%;
+            }
+            
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+                padding: 10px 0;
+                border-top: 1px solid #eee;
+            }
+            
+            .header-actions a {
+                font-size: 12px;
+                padding: 5px 10px;
+            }
+            
+            .header-actions i {
+                font-size: 14px;
+            }
+            
+            .navbar {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .mobile-menu-btn {
+                display: flex !important;
+                align-items: center;
+                gap: 5px;
+                padding: 10px 15px;
+                background: #1976d2;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+            }
+            
+            .navbar > a {
+                display: none; /* Hide desktop nav on mobile */
+            }
+            
+            .navbar.active > a {
+                display: flex; /* Show when menu is active */
+                width: 100%;
+                padding: 10px;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .nav-right {
+                display: none; /* Hide on mobile */
+            }
+            
+            /* Products Grid - 2 columns on tablet */
+            .products-grid,
+            [style*="grid-template-columns: repeat(3"] {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+            
+            /* Product Card Adjustments */
+            [style*="height: 220px"],
+            [style*="height: 250px"] {
+                height: 180px !important;
+            }
+            
+            /* Forms */
+            input, select, textarea, button {
+                font-size: 14px !important;
+                padding: 10px !important;
+            }
+            
+            /* Admin Layout */
+            [style*="grid-template-columns: 250px"] {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .sidebar {
+                display: none; /* Hide sidebar on mobile or make collapsible */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 18px;
+            }
+            
+            .header-actions a {
+                font-size: 11px;
+            }
+            
+            .header-actions i {
+                display: none; /* Hide icons on very small screens */
+            }
+            
+            /* Products Grid - 1 column on mobile */
+            .products-grid,
+            [style*="grid-template-columns: repeat(2"],
+            [style*="grid-template-columns: repeat(3"] {
+                grid-template-columns: 1fr !important;
+            }
+            
+            /* Product Card */
+            [style*="height: 180px"] {
+                height: 150px !important;
+            }
+            
+            /* Buttons */
+            button, 
+            [style*="padding: 14px"],
+            [style*="padding: 15px"] {
+                padding: 12px !important;
+                font-size: 14px !important;
+            }
+            
+            /* Headings */
+            h1 { font-size: 20px !important; }
+            h2 { font-size: 18px !important; }
+            h3 { font-size: 16px !important; }
+            
+            /* Tabs */
+            [style*="display: flex; border-bottom"] {
+                flex-wrap: wrap;
+            }
+            
+            .tab-btn {
+                padding: 10px !important;
+                font-size: 14px !important;
+            }
+            
+            /* Footer */
+            .footer-content {
+                grid-template-columns: 1fr !important;
+                text-align: center;
+            }
+            
+            .footer-links {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            .footer-brand {
+                grid-column: 1 / -1;
+            }
+        }
+
+        /* Touch-friendly adjustments */
+        @media (hover: none) {
+            a, button {
+                min-height: 44px; /* Apple's recommended touch target size */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-top">
+                <a href="{{ url_for('index') }}" class="logo">
+                    <i class="fas fa-shopping-bag"></i> Brand
+                </a>
+                
+                <div class="search-bar">
+                    <form action="{{ url_for('products') }}" method="GET">
+                        <input type="text" name="search" placeholder="Search">
+                        <select name="category">
+                            <option value="">All category</option>
+                            {% for cat in categories %}
+                            <option value="{{ cat.name }}">{{ cat.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+                
+                <!-- ✅ UPDATED HEADER ACTIONS -->
+                <div class="header-actions">
+                    <a href="{{ url_for('login') }}"><i class="fas fa-user"></i> Profile</a>
+                    <a href="#"><i class="fas fa-envelope"></i> Message</a>
+                    <a href="#"><i class="fas fa-box"></i> Orders</a>
+                    <a href="{{ url_for('cart') }}" class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i> My cart
+                        {% if session.get('user_id') %}
+                        <span class="cart-count" id="cart-count">0</span>
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+            
+            <nav class="navbar">
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i> All category
+                </button>
+                
+                <!-- ✅ Navigation Links with Category Filters -->
+                <a href="{{ url_for('products') }}">Hot offers</a>
+                <a href="{{ url_for('products', category='Gift Boxes') }}">Gift boxes</a>
+                <a href="{{ url_for('products', category='Projects') }}">Projects</a>
+                <a href="{{ url_for('products', category='Menu Items') }}">Menu item</a>
+                <a href="{{ url_for('wishlist') }}" style="color: #666; text-decoration: none; margin-left: 20px;">
+                    <i class="far fa-heart"></i> Wishlist
+                </a>
+                <a href="#">Help <i class="fas fa-chevron-down"></i></a>
+                
+                <div class="nav-right">
+                    <span>English, USD <i class="fas fa-chevron-down"></i></span>
+                    <span>Ship to 🇩🇪 <i class="fas fa-chevron-down"></i></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="newsletter">
+                <h3>Subscribe on our newsletter</h3>
+                <p>Get daily news on upcoming offers from many suppliers all over the world</p>
+                <form>
+                    <input type="email" placeholder="Email">
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+            
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="{{ url_for('index') }}" class="logo"><i class="fas fa-shopping-bag"></i> Brand</a>
+                    <p>Best information about the company goes here but now lorem ipsum is</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <div>
+                        <h4>About</h4>
+                        <a href="#">About Us</a>
+                        <a href="#">Find store</a>
+                        <a href="#">Categories</a>
+                        <a href="#">Blogs</a>
+                    </div>
+                    <div>
+                        <h4>Partnership</h4>
+                        <a href="#">About Us</a>
+                        <a href="#">Find store</a>
+                        <a href="#">Categories</a>
+                        <a href="#">Blogs</a>
+                    </div>
+                    <div>
+                        <h4>Information</h4>
+                        <a href="#">Help Center</a>
+                        <a href="#">Money Refund</a>
+                        <a href="#">Shipping</a>
+                        <a href="#">Contact us</a>
+                    </div>
+                    <div>
+                        <h4>For users</h4>
+                        {% if session.get('user_id') %}
+                            <a href="{{ url_for('logout') }}">Logout</a>
+                        {% else %}
+                            <a href="{{ url_for('login') }}">Login</a>
+                        {% endif %}
+                        <a href="{{ url_for('register') }}">Register</a>
+                        <a href="#">Settings</a>
+                        <a href="#">My Orders</a>
+                    </div>
+                    <div>
+                        <h4>Get app</h4>
+                        <a href="#"><img src="https://via.placeholder.com/140x40" alt="App Store"></a>
+                        <a href="#"><img src="https://via.placeholder.com/140x40" alt="Google Play"></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2023 Ecommerce.</p>
+                <p>🇺 English <i class="fas fa-chevron-up"></i></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ✅ Mobile Menu Toggle Script -->
+    <script>
+        function toggleMobileMenu() {
+            const navbar = document.querySelector('.navbar');
+            navbar.classList.toggle('active');
+        }
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const navbar = document.querySelector('.navbar');
+            const btn = document.querySelector('.mobile-menu-btn');
+            if (!navbar.contains(e.target) && !btn.contains(e.target)) {
+                navbar.classList.remove('active');
+            }
+        });
+    </script>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

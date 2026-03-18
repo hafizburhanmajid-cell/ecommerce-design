@@ -1,0 +1,273 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout - Ecommerce Brand{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 40px 20px;">
+    <h1 style="font-size: 28px; margin-bottom: 30px; color: #333;">Checkout</h1>
+    
+    <form method="POST" action="{{ url_for('checkout') }}">
+        <div style="display: grid; grid-template-columns: 1fr 400px; gap: 30px;">
+            
+            <!-- Left Side: Forms -->
+            <div>
+                <!-- Shipping Address -->
+                <div style="background: white; padding: 30px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <h2 style="font-size: 20px; margin-bottom: 20px; color: #333;">
+                        <i class="fas fa-shipping-fast" style="color: #1976d2;"></i> Shipping Address
+                    </h2>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                        <div>
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333; font-size: 14px;">
+                                First Name *
+                            </label>
+                            <input type="text" name="first_name" required 
+                                   placeholder="John"
+                                   style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333; font-size: 14px;">
+                                Last Name *
+                            </label>
+                            <input type="text" name="last_name" required 
+                                   placeholder="Doe"
+                                   style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333; font-size: 14px;">
+                            Email Address *
+                        </label>
+                        <input type="email" name="email" required 
+                               placeholder="john.doe@example.com"
+                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333; font-size: 14px;">
+                            Phone Number *
+                        </label>
+                        <input type="tel" name="phone" required 
+                               placeholder="+1 234 567 8900"
+                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333; font-size: 14px;">
+                            Street Address *
+                        </label>
+                        <input type="text" name="address" required 
+                               placeholder="123 Main Street, Apt 4B"
+                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                        <div>
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333; font-size: 14px;">
+                                City *
+                            </label>
+                            <input type="text" name="city" required 
+                                   placeholder="New York"
+                                   style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333; font-size: 14px;">
+                                Postal Code *
+                            </label>
+                            <input type="text" name="postal_code" required 
+                                   placeholder="10001"
+                                   style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333; font-size: 14px;">
+                            Country *
+                        </label>
+                        <select name="country" required 
+                                style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+                            <option value="">Select Country</option>
+                            <option value="US">United States</option>
+                            <option value="GB">United Kingdom</option>
+                            <option value="CA">Canada</option>
+                            <option value="AU">Australia</option>
+                            <option value="DE">Germany</option>
+                            <option value="FR">France</option>
+                            <option value="PK">Pakistan</option>
+                            <option value="IN">India</option>
+                            <option value="AE">United Arab Emirates</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333; font-size: 14px;">
+                            Order Notes (Optional)
+                        </label>
+                        <textarea name="notes" rows="3" 
+                                  placeholder="Special instructions for your order"
+                                  style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; resize: vertical;"></textarea>
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div style="background: white; padding: 30px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <h2 style="font-size: 20px; margin-bottom: 20px; color: #333;">
+                        <i class="fas fa-credit-card" style="color: #1976d2;"></i> Payment Method
+                    </h2>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: flex; align-items: center; gap: 10px; padding: 15px; border: 2px solid #1976d2; border-radius: 8px; cursor: pointer; background: #e3f2fd;">
+                            <input type="radio" name="payment_method" value="card" checked style="cursor: pointer;">
+                            <div>
+                                <div style="font-weight: 600; color: #333;">Credit/Debit Card</div>
+                                <div style="font-size: 12px; color: #666;">Visa, Mastercard, American Express</div>
+                            </div>
+                            <div style="margin-left: auto;">
+                                <i class="fab fa-cc-visa" style="font-size: 24px; color: #1a1f71;"></i>
+                                <i class="fab fa-cc-mastercard" style="font-size: 24px; color: #eb001b; margin-left: 5px;"></i>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: flex; align-items: center; gap: 10px; padding: 15px; border: 2px solid #ddd; border-radius: 8px; cursor: pointer;">
+                            <input type="radio" name="payment_method" value="paypal" style="cursor: pointer;">
+                            <div>
+                                <div style="font-weight: 600; color: #333;">PayPal</div>
+                                <div style="font-size: 12px; color: #666;">Pay with your PayPal account</div>
+                            </div>
+                            <div style="margin-left: auto;">
+                                <i class="fab fa-paypal" style="font-size: 24px; color: #00457c;"></i>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: flex; align-items: center; gap: 10px; padding: 15px; border: 2px solid #ddd; border-radius: 8px; cursor: pointer;">
+                            <input type="radio" name="payment_method" value="cod" style="cursor: pointer;">
+                            <div>
+                                <div style="font-weight: 600; color: #333;">Cash on Delivery</div>
+                                <div style="font-size: 12px; color: #666;">Pay when you receive your order</div>
+                            </div>
+                            <div style="margin-left: auto;">
+                                <i class="fas fa-money-bill-wave" style="font-size: 24px; color: #4caf50;"></i>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- Card Details (Show only if card selected) -->
+                    <div id="card-details" style="margin-top: 20px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333; font-size: 14px;">
+                                Card Number *
+                            </label>
+                            <input type="text" name="card_number" 
+                                   placeholder="1234 5678 9012 3456"
+                                   style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                            <div>
+                                <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333; font-size: 14px;">
+                                    Expiry Date *
+                                </label>
+                                <input type="text" name="expiry_date" 
+                                       placeholder="MM/YY"
+                                       style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333; font-size: 14px;">
+                                    CVV *
+                                </label>
+                                <input type="text" name="cvv" 
+                                       placeholder="123"
+                                       style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333; font-size: 14px;">
+                                Cardholder Name *
+                            </label>
+                            <input type="text" name="card_name" 
+                                   placeholder="John Doe"
+                                   style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Order Summary -->
+            <div>
+                <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: sticky; top: 20px;">
+                    <h3 style="font-size: 18px; margin-bottom: 20px; color: #333;">Order Summary</h3>
+                    
+                    <!-- Cart Items -->
+                    <div style="margin-bottom: 20px; max-height: 300px; overflow-y: auto;">
+                        {% for item in cart_items %}
+                        <div style="display: flex; gap: 15px; padding: 15px 0; border-bottom: 1px solid #eee;">
+                            <img src="{{ url_for('static', filename='img/' + item.image) if item.image else 'https://via.placeholder.com/60x60' }}" 
+                                 alt="{{ item.name }}" 
+                                 style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;">
+                            <div style="flex: 1;">
+                                <h4 style="font-size: 14px; color: #333; margin-bottom: 5px;">{{ item.name }}</h4>
+                                <p style="font-size: 13px; color: #666; margin-bottom: 5px;">Qty: {{ item.quantity }}</p>
+                                <p style="font-size: 14px; font-weight: 600; color: #333;">${{ "%.2f"|format(item.price * item.quantity) }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Totals -->
+                    <div style="border-top: 2px solid #eee; padding-top: 15px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px;">
+                            <span style="color: #666;">Subtotal:</span>
+                            <span style="color: #333; font-weight: 600;">${{ "%.2f"|format(total) }}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px;">
+                            <span style="color: #666;">Shipping:</span>
+                            <span style="color: #4caf50; font-weight: 600;">Free</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px;">
+                            <span style="color: #666;">Tax:</span>
+                            <span style="color: #333; font-weight: 600;">${{ "%.2f"|format(total * 0.1) }}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding-top: 15px; border-top: 2px solid #1976d2; font-size: 18px; font-weight: bold; margin-top: 15px;">
+                            <span style="color: #333;">Total:</span>
+                            <span style="color: #1976d2;">${{ "%.2f"|format(total * 1.1) }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Place Order Button -->
+                    <button type="submit" 
+                            style="width: 100%; padding: 15px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: 600; margin-top: 20px;">
+                        <i class="fas fa-check-circle"></i> Place Order
+                    </button>
+
+                    <!-- Security Badge -->
+                    <div style="text-align: center; margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 4px;">
+                        <i class="fas fa-lock" style="color: #4caf50; font-size: 20px; margin-bottom: 5px;"></i>
+                        <p style="font-size: 12px; color: #666; margin: 0;">Secure SSL Encryption</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+// Show/Hide card details based on payment method
+document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+        const cardDetails = document.getElementById('card-details');
+        if (this.value === 'card') {
+            cardDetails.style.display = 'block';
+        } else {
+            cardDetails.style.display = 'none';
+        }
+    });
+});
+</script>
+{% endblock %}

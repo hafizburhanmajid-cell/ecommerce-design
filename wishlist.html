@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}My Wishlist - Ecommerce Brand{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 40px 20px;">
+    <h1 style="font-size: 28px; margin-bottom: 30px; color: #333;">
+        <i class="fas fa-heart" style="color: #e74c3c;"></i> My Wishlist
+    </h1>
+    
+    {% if wishlist_items %}
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+        {% for item in wishlist_items %}
+        <div style="background: white; border-radius: 8px; padding: 20px; border: 1px solid #eee;">
+            <div style="position: relative; margin-bottom: 15px;">
+                <img src="{{ url_for('static', filename='img/' + item.image) if item.image else 'https://via.placeholder.com/250x250' }}" 
+                     alt="{{ item.name }}" 
+                     style="width: 100%; height: 220px; object-fit: contain; border-radius: 4px;">
+                <button onclick="removeFromWishlist({{ item.id }})" 
+                        style="position: absolute; top: 10px; right: 10px; background: #e74c3c; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; color: white;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div style="margin-bottom: 10px;">
+                <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px;">
+                    <span style="font-size: 18px; font-weight: bold; color: #333;">${{ item.price }}</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                    <span style="color: #ffc107; font-size: 12px;">
+                        {% for i in range(5) %}
+                            {% if i < (item.rating | default(4))|int %}
+                                <i class="fas fa-star"></i>
+                            {% else %}
+                                <i class="far fa-star"></i>
+                            {% endif %}
+                        {% endfor %}
+                    </span>
+                    <span style="color: #666; font-size: 12px;">{{ item.rating | default(4.5) }}</span>
+                </div>
+                <h3 style="font-size: 14px; color: #666; margin: 0 0 10px; line-height: 1.4;">{{ item.name }}</h3>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="addToCart({{ item.id }})" 
+                        style="flex: 1; padding: 10px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
+                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                </button>
+                <a href="{{ url_for('product_detail', product_id=item.id) }}" 
+                   style="padding: 10px 15px; background: white; color: #1976d2; border: 1px solid #1976d2; border-radius: 4px; text-decoration: none; font-size: 14px;">
+                    View
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 60px 20px; background: white; border-radius: 8px;">
+        <i class="far fa-heart" style="font-size: 80px; color: #ddd; margin-bottom: 20px;"></i>
+        <h3 style="color: #666; margin-bottom: 10px;">Your wishlist is empty</h3>
+        <p style="color: #999; margin-bottom: 20px;">Start adding products you love!</p>
+        <a href="{{ url_for('products') }}" 
+           style="display: inline-block; padding: 12px 30px; background: #1976d2; color: white; text-decoration: none; border-radius: 4px; font-size: 16px; font-weight: 600;">
+            Browse Products
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+function removeFromWishlist(productId) {
+    if (confirm('Remove from wishlist?')) {
+        fetch(`/remove_from_wishlist/${productId}`, {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        });
+    }
+}
+
+function addToCart(productId) {
+    fetch(`/add_to_cart/${productId}`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({quantity: 1})
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('✅ Added to cart!');
+            const cartCount = document.getElementById('cart-count');
+            if (cartCount) {
+                cartCount.innerText = parseInt(cartCount.innerText) + 1;
+            }
+        }
+    });
+}
+</script>
+{% endblock %}
