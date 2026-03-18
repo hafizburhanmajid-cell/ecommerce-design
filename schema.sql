@@ -1,7 +1,5 @@
 CREATE DATABASE IF NOT EXISTS ecommerce_db;
 USE ecommerce_db;
-
--- Users table
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(100) NOT NULL UNIQUE,
@@ -10,14 +8,10 @@ CREATE TABLE IF NOT EXISTS users (
     is_admin BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
--- Categories table
 CREATE TABLE IF NOT EXISTS categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL
 );
-
--- Products table
 CREATE TABLE IF NOT EXISTS products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -32,8 +26,6 @@ CREATE TABLE IF NOT EXISTS products (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (category_id) REFERENCES categories(id)
 );
-
--- Cart table
 CREATE TABLE IF NOT EXISTS cart (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
@@ -42,12 +34,8 @@ CREATE TABLE IF NOT EXISTS cart (
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
-
--- Insert sample categories
 INSERT INTO categories (name) VALUES 
 ('Electronics'), ('Clothing'), ('Home & Outdoor'), ('Sports');
-
--- Insert sample products
 INSERT INTO products (name, description, price, old_price, image, category_id, stock, rating, reviews_count) VALUES
 ('Smart Watch', 'Latest smart watch with fitness tracking', 99.50, 128.00, 'watch.jpg', 1, 50, 4.5, 154),
 ('GoPro Camera', '4K Action Camera - Black', 398.00, 498.00, 'camera.jpg', 1, 30, 4.8, 200),
