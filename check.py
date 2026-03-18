@@ -1,6 +1,6 @@
 import pymysql
 
-print("🔄 Testing MySQL connection...")
+print(" Testing MySQL connection...")
 
 try:
     conn = pymysql.connect(
@@ -10,7 +10,7 @@ try:
         database='ecommerce_db',
         port=3306
     )
-    print("✅ SUCCESS! Database connected!")
+    print(" SUCCESS! Database connected!")
     conn.close()
 except pymysql.err.OperationalError as e:
-    print(f"❌ MySQL Error: {e}")
+    print(f" MySQL Error: {e}")

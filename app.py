@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for, flash
 import pymysql
-pymysql.install_as_MySQLdb()  # ⚠️ Ye line zaroor add karein!
+pymysql.install_as_MySQLdb()  #  Ye line zaroor add karein!
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 from config import Config
-from decimal import Decimal  # ✅ Decimal import karein
+from decimal import Decimal  #  Decimal import karein
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -20,7 +20,7 @@ def get_db_connection():
         charset='utf8mb4'
     )
 
-# ============ ✅ HELPER FUNCTION - Decimal to Float Convert ============
+# ============  HELPER FUNCTION - Decimal to Float Convert ============
 def convert_decimal_to_float(data):
     """Convert Decimal values to float for template compatibility"""
     if isinstance(data, dict):
@@ -34,9 +34,8 @@ def convert_decimal_to_float(data):
                     if isinstance(value, Decimal):
                         item[key] = float(value)
     return data
-# =======================================================================
 
-# ============ ✅ GLOBAL CONTEXT PROCESSOR ============
+# ============  GLOBAL CONTEXT PROCESSOR ============
 @app.context_processor
 def inject_categories():
     try:
@@ -50,7 +49,6 @@ def inject_categories():
     except Exception as e:
         print(f"Error loading categories: {e}")
         return dict(categories=[])
-# ====================================================
 
 # Login required decorator
 def login_required(f):
@@ -80,7 +78,7 @@ def index():
     cursor.close()
     conn.close()
     
-    # ✅ Convert Decimal to float
+    #  Convert Decimal to float
     featured_products = convert_decimal_to_float(featured_products)
     
     return render_template('index.html', featured_products=featured_products)
@@ -120,12 +118,12 @@ def products():
     cursor.close()
     conn.close()
     
-    # ✅ Convert Decimal to float
+    #  Convert Decimal to float
     all_products = convert_decimal_to_float(all_products)
     
     return render_template('products.html', products=all_products)
 
-# ✅ Product Detail Page - UPDATED with Reviews
+#  Product Detail Page - UPDATED with Reviews
 @app.route('/product/<int:product_id>')
 def product_detail(product_id):
     conn = get_db_connection()
@@ -182,7 +180,7 @@ def product_detail(product_id):
                           reviews=reviews, 
                           related_products=related_products)
 
-# Cart Page - ✅ FIXED Decimal Error
+# Cart Page -  FIXED Decimal Error
 @app.route('/cart')
 def cart():
     if 'user_id' not in session:
@@ -200,7 +198,7 @@ def cart():
     cursor.close()
     conn.close()
     
-    # ✅ Convert Decimal to float and calculate total safely
+    #  Convert Decimal to float and calculate total safely
     total = 0
     for item in cart_items:
         if item.get('price'):
@@ -211,7 +209,7 @@ def cart():
     
     return render_template('cart.html', cart_items=cart_items, total=float(total))
 
-# ✅ CHECKOUT ROUTE
+#  CHECKOUT ROUTE
 @app.route('/checkout', methods=['GET', 'POST'])
 @login_required
 def checkout():
@@ -301,7 +299,7 @@ def checkout():
         flash('Order placed successfully!', 'success')
         return redirect(url_for('order_success', order_id=order_id))
 
-# ✅ ORDER SUCCESS ROUTE
+#  ORDER SUCCESS ROUTE
 @app.route('/order-success/<int:order_id>')
 @login_required
 def order_success(order_id):
@@ -319,7 +317,7 @@ def order_success(order_id):
     
     return render_template('order_success.html', order=order)
 
-# ✅ MY ORDERS ROUTE
+#  MY ORDERS ROUTE
 @app.route('/my-orders')
 @login_required
 def my_orders():
@@ -336,7 +334,7 @@ def my_orders():
     
     return render_template('my_orders.html', orders=orders)
 
-# ✅ PROFILE ROUTE
+#  PROFILE ROUTE
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
@@ -367,7 +365,7 @@ def profile():
     
     return render_template('profile.html', user=user)
 
-# ✅ CHANGE PASSWORD ROUTE
+#  CHANGE PASSWORD ROUTE
 @app.route('/change-password', methods=['POST'])
 @login_required
 def change_password():
@@ -404,7 +402,7 @@ def change_password():
     flash('Password changed successfully!', 'success')
     return redirect(url_for('profile'))
 
-# ✅ SEARCH FUNCTIONALITY
+#  SEARCH FUNCTIONALITY
 @app.route('/search')
 def search():
     query = request.args.get('q', '')
@@ -448,7 +446,7 @@ def search():
                           query=query, 
                           category=category)
 
-# ✅ AJAX SEARCH - Real-time suggestions
+#  AJAX SEARCH - Real-time suggestions
 @app.route('/api/search')
 def api_search():
     query = request.args.get('q', '')
@@ -481,7 +479,7 @@ def api_search():
     
     return jsonify(results)
 
-# ✅ WISHLIST ROUTES
+#  WISHLIST ROUTES
 @app.route('/wishlist')
 @login_required
 def wishlist():
@@ -538,7 +536,7 @@ def remove_from_wishlist(product_id):
     
     return jsonify({'success': True, 'message': 'Removed from wishlist'})
 
-# ✅ PRODUCT REVIEWS ROUTES (NEW)
+#  PRODUCT REVIEWS ROUTES (NEW)
 @app.route('/product/<int:product_id>/review', methods=['POST'])
 @login_required
 def add_review(product_id):
@@ -728,7 +726,7 @@ def logout():
     flash('You have been logged out.', 'success')
     return redirect(url_for('index'))
 
-# ✅ UPDATED ADMIN ROUTE
+#  UPDATED ADMIN ROUTE
 @app.route('/admin')
 @admin_required
 def admin():

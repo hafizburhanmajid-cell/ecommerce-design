@@ -11,7 +11,7 @@ try:
         password=os.getenv('DB_PASSWORD', ''),
         database=os.getenv('DB_NAME', 'ecommerce_db')
     )
-    print("✅ Database connected successfully!")
+    print("Database connected successfully!")
     conn.close()
 except Exception as e:
-    print(f"❌ Connection failed: {e}")
+    print(f" Connection failed: {e}")
