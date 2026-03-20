@@ -7,9 +7,8 @@
     <!-- Breadcrumb -->
     <div class="breadcrumb" style="padding: 10px 0; margin-bottom: 20px; color: #666; font-size: 14px;">
         <a href="{{ url_for('index') }}" style="color: #666; text-decoration: none;">Home</a> &gt; 
-        <a href="{{ url_for('products') }}" style="color: #666; text-decoration: none;">Clothings</a> &gt; 
-        <a href="#" style="color: #666; text-decoration: none;">Men's wear</a> &gt; 
-        <span>Summer clothing</span>
+        <a href="{{ url_for('products') }}" style="color: #666; text-decoration: none;">Products</a> &gt; 
+        <span>{{ product.name }}</span>
     </div>
 
     <div style="display: grid; grid-template-columns: 1fr 1.5fr 350px; gap: 30px; margin-bottom: 40px;">
@@ -17,7 +16,8 @@
         <!-- Product Images -->
         <div style="background: white; padding: 20px; border-radius: 8px;">
             <div class="main-image" style="margin-bottom: 15px;">
-                <img src="{{ url_for('static', filename='img/' + product.image) if product.image else 'https://via.placeholder.com/400x400' }}" 
+                <!-- ✅ FIXED: Removed extra spaces -->
+                <img id="mainImg" src="{{ url_for('static', filename='img/' + product.image) if product.image else 'https://via.placeholder.com/400x400' }}" 
                      alt="{{ product.name }}" 
                      style="width: 100%; border-radius: 8px;">
             </div>
@@ -26,9 +26,18 @@
                      alt="Thumbnail 1" 
                      style="width: 100%; border: 2px solid #1976d2; border-radius: 4px; cursor: pointer; padding: 5px;" 
                      class="active" onclick="changeImage(this)">
-                <img src="https://via.placeholder.com/100x100" alt="Thumbnail 2" style="width: 100%; border: 2px solid #ddd; border-radius: 4px; cursor: pointer; padding: 5px;" onclick="changeImage(this)">
-                <img src="https://via.placeholder.com/100x100" alt="Thumbnail 3" style="width: 100%; border: 2px solid #ddd; border-radius: 4px; cursor: pointer; padding: 5px;" onclick="changeImage(this)">
-                <img src="https://via.placeholder.com/100x100" alt="Thumbnail 4" style="width: 100%; border: 2px solid #ddd; border-radius: 4px; cursor: pointer; padding: 5px;" onclick="changeImage(this)">
+                <img src="{{ url_for('static', filename='img/' + product.image) if product.image else 'https://via.placeholder.com/100x100' }}" 
+                     alt="Thumbnail 2" 
+                     style="width: 100%; border: 2px solid #ddd; border-radius: 4px; cursor: pointer; padding: 5px;" 
+                     onclick="changeImage(this)">
+                <img src="{{ url_for('static', filename='img/' + product.image) if product.image else 'https://via.placeholder.com/100x100' }}" 
+                     alt="Thumbnail 3" 
+                     style="width: 100%; border: 2px solid #ddd; border-radius: 4px; cursor: pointer; padding: 5px;" 
+                     onclick="changeImage(this)">
+                <img src="{{ url_for('static', filename='img/' + product.image) if product.image else 'https://via.placeholder.com/100x100' }}" 
+                     alt="Thumbnail 4" 
+                     style="width: 100%; border: 2px solid #ddd; border-radius: 4px; cursor: pointer; padding: 5px;" 
+                     onclick="changeImage(this)">
             </div>
         </div>
 
@@ -53,56 +62,19 @@
                     </span>
                     <span style="color: #666;">{{ product.rating | default(4.5) }}</span>
                     <span style="color: #999;">• {{ reviews|length }} reviews</span>
-                    <span style="color: #999;">• {{ product.orders | default(154) }} sold</span>
                 </div>
             </div>
 
-            <!-- Price Tiers -->
+            <!-- Price -->
             <div class="price-box" style="background: #fff3e0; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
-                <div class="price-tier" style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #ffe0b2;">
-                    <span style="color: #e74c3c; font-size: 20px; font-weight: bold;">$98.00</span>
-                    <span style="color: #666; font-size: 14px;">50-100 pcs</span>
-                </div>
-                <div class="price-tier" style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #ffe0b2;">
-                    <span style="color: #333; font-size: 18px;">$90.00</span>
-                    <span style="color: #666; font-size: 14px;">100-700 pcs</span>
-                </div>
-                <div class="price-tier" style="display: flex; justify-content: space-between; padding: 10px 0;">
-                    <span style="color: #333; font-size: 18px;">$78.00</span>
-                    <span style="color: #666; font-size: 14px;">700+ pcs</span>
-                </div>
+                <span style="color: #e74c3c; font-size: 28px; font-weight: bold;">${{ product.price }}</span>
             </div>
 
-            <!-- Product Specs -->
-            <div class="product-specs" style="margin-bottom: 25px;">
-                <div class="spec-row" style="display: flex; padding: 10px 0; border-bottom: 1px solid #eee;">
-                    <span style="width: 150px; color: #666;">Price:</span>
-                    <span>Negotiable</span>
-                </div>
-                <div class="spec-row" style="display: flex; padding: 10px 0; border-bottom: 1px solid #eee;">
-                    <span style="width: 150px; color: #666;">Type:</span>
-                    <span>Classic shoes</span>
-                </div>
-                <div class="spec-row" style="display: flex; padding: 10px 0; border-bottom: 1px solid #eee;">
-                    <span style="width: 150px; color: #666;">Material:</span>
-                    <span>Plastic material</span>
-                </div>
-                <div class="spec-row" style="display: flex; padding: 10px 0; border-bottom: 1px solid #eee;">
-                    <span style="width: 150px; color: #666;">Design:</span>
-                    <span>Modern nice</span>
-                </div>
-                <div class="spec-row" style="display: flex; padding: 10px 0; border-bottom: 1px solid #eee;">
-                    <span style="width: 150px; color: #666;">Customization:</span>
-                    <span>Customized logo and design custom packages</span>
-                </div>
-                <div class="spec-row" style="display: flex; padding: 10px 0; border-bottom: 1px solid #eee;">
-                    <span style="width: 150px; color: #666;">Protection:</span>
-                    <span>Refund Policy</span>
-                </div>
-                <div class="spec-row" style="display: flex; padding: 10px 0;">
-                    <span style="width: 150px; color: #666;">Warranty:</span>
-                    <span>2 years full warranty</span>
-                </div>
+            <!-- Description -->
+            <div style="margin-bottom: 25px;">
+                <p style="color: #666; line-height: 1.8;">
+                    {{ product.description if product.description else 'High quality product with premium features. Perfect for everyday use.' }}
+                </p>
             </div>
 
             <!-- Action Buttons -->
@@ -110,7 +82,7 @@
                 <button onclick="addToCart({{ product.id }})" style="flex: 1; padding: 15px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: 600;">
                     <i class="fas fa-shopping-cart"></i> Add to cart
                 </button>
-                <button style="padding: 15px 30px; background: white; color: #1976d2; border: 2px solid #1976d2; border-radius: 4px; cursor: pointer; font-size: 16px;">
+                <button onclick="addToWishlist({{ product.id }})" style="padding: 15px 30px; background: white; color: #1976d2; border: 2px solid #1976d2; border-radius: 4px; cursor: pointer; font-size: 16px;">
                     <i class="far fa-heart"></i>
                 </button>
             </div>
@@ -118,40 +90,29 @@
 
         <!-- Supplier Info -->
         <div class="supplier-info" style="background: white; padding: 25px; border-radius: 8px; height: fit-content;">
-            <div class="supplier-header" style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
-                <div class="supplier-logo" style="width: 50px; height: 50px; background: #b2dfdb; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; color: #00695c;">
-                    R
+            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                <div style="width: 50px; height: 50px; background: #b2dfdb; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; color: #00695c;">
+                    S
                 </div>
                 <div>
-                    <p style="font-size: 14px; color: #666; margin: 0;">Supplier</p>
-                    <p style="font-weight: 600; color: #333; margin: 0;">Guanjoi Trading LLC</p>
+                    <p style="font-size: 14px; color: #666; margin: 0;">Seller</p>
+                    <p style="font-weight: 600; color: #333; margin: 0;">Ecommerce Store</p>
                 </div>
             </div>
             
-            <div class="supplier-details" style="margin-bottom: 20px;">
-                <p style="margin-bottom: 8px; font-size: 14px; color: #666; display: flex; align-items: center; gap: 8px;">
-                    <i class="fas fa-map-marker-alt" style="width: 20px; color: #1976d2;"></i>
-                    Germany, Berlin
-                </p>
+            <div style="margin-bottom: 20px;">
                 <p style="margin-bottom: 8px; font-size: 14px; color: #666; display: flex; align-items: center; gap: 8px;">
                     <i class="fas fa-shield-alt" style="width: 20px; color: #4caf50;"></i>
                     Verified Seller
                 </p>
                 <p style="margin-bottom: 8px; font-size: 14px; color: #666; display: flex; align-items: center; gap: 8px;">
-                    <i class="fas fa-globe" style="width: 20px; color: #1976d2;"></i>
-                    Worldwide shipping
+                    <i class="fas fa-undo" style="width: 20px; color: #1976d2;"></i>
+                    30 Days Return
                 </p>
             </div>
 
             <button style="width: 100%; padding: 12px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; margin-bottom: 10px;">
-                Send inquiry
-            </button>
-            <button style="width: 100%; padding: 12px; background: white; color: #1976d2; border: 1px solid #1976d2; border-radius: 4px; cursor: pointer; font-size: 14px;">
-                Seller's profile
-            </button>
-
-            <button style="width: 100%; padding: 10px; background: none; color: #1976d2; border: none; cursor: pointer; font-size: 14px; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 5px;">
-                <i class="far fa-heart"></i> Save for later
+                Contact Seller
             </button>
         </div>
     </div>
@@ -159,135 +120,23 @@
     <!-- Tabs Section -->
     <div class="product-tabs" style="background: white; border-radius: 8px; margin-bottom: 40px;">
         <div class="tabs-header" style="display: flex; border-bottom: 2px solid #eee;">
-            <button class="tab-btn active" style="padding: 15px 30px; background: none; border: none; cursor: pointer; font-size: 16px; font-weight: 500; color: #1976d2; border-bottom: 2px solid #1976d2; margin-bottom: -2px;">Description</button>
-            <button class="tab-btn" style="padding: 15px 30px; background: none; border: none; cursor: pointer; font-size: 16px; font-weight: 500; color: #666;">Reviews</button>
-            <button class="tab-btn" style="padding: 15px 30px; background: none; border: none; cursor: pointer; font-size: 16px; font-weight: 500; color: #666;">Shipping</button>
-            <button class="tab-btn" style="padding: 15px 30px; background: none; border: none; cursor: pointer; font-size: 16px; font-weight: 500; color: #666;">About seller</button>
+            <button class="tab-btn active" style="padding: 15px 30px; background: none; border: none; cursor: pointer; font-size: 16px; font-weight: 500; color: #1976d2; border-bottom: 2px solid #1976d2;">Description</button>
+            <button class="tab-btn" style="padding: 15px 30px; background: none; border: none; cursor: pointer; font-size: 16px; font-weight: 500; color: #666;">Reviews ({{ reviews|length }})</button>
         </div>
         
         <div class="tabs-content" style="padding: 30px;">
-            <div class="tab-panel active">
-                <p style="color: #666; line-height: 1.8; margin-bottom: 20px;">
-                    {{ product.description if product.description else 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' }}
-                </p>
-                <p style="color: #666; line-height: 1.8; margin-bottom: 20px;">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                </p>
-                <p style="color: #666; line-height: 1.8; margin-bottom: 20px;">
-                    Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                </p>
-
-                <!-- Specifications Table -->
-                <table class="specs-table" style="width: 100%; margin: 20px 0; border-collapse: collapse;">
-                    <tr>
-                        <td style="padding: 12px; border: 1px solid #eee; background: #f5f7fa; font-weight: 500; width: 200px;">Model</td>
-                        <td style="padding: 12px; border: 1px solid #eee;">#8786867</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 12px; border: 1px solid #eee; background: #f5f7fa; font-weight: 500;">Style</td>
-                        <td style="padding: 12px; border: 1px solid #eee;">Classic style</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 12px; border: 1px solid #eee; background: #f5f7fa; font-weight: 500;">Certificate</td>
-                        <td style="padding: 12px; border: 1px solid #eee;">ISO-898921212</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 12px; border: 1px solid #eee; background: #f5f7fa; font-weight: 500;">Size</td>
-                        <td style="padding: 12px; border: 1px solid #eee;">34mm x 450mm x 19mm</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 12px; border: 1px solid #eee; background: #f5f7fa; font-weight: 500;">Memory</td>
-                        <td style="padding: 12px; border: 1px solid #eee;">36GB RAM</td>
-                    </tr>
-                </table>
-
-                <!-- Features List -->
-                <ul class="features-list" style="list-style: none; margin-top: 20px; padding: 0;">
-                    <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
-                        <i class="fas fa-check" style="color: #4caf50;"></i>
-                        Some great feature name here
-                    </li>
-                    <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
-                        <i class="fas fa-check" style="color: #4caf50;"></i>
-                        Lorem ipsum dolor sit amet, consectetur
-                    </li>
-                    <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
-                        <i class="fas fa-check" style="color: #4caf50;"></i>
-                        Duis aute irure dolor in reprehenderit
-                    </li>
-                    <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
-                        <i class="fas fa-check" style="color: #4caf50;"></i>
-                        Some great feature name here
-                    </li>
-                </ul>
-            </div>
+            <p style="color: #666; line-height: 1.8; margin-bottom: 20px;">
+                {{ product.description if product.description else 'High quality product with premium features and excellent build quality.' }}
+            </p>
         </div>
     </div>
 
-    <!-- ✅ PRODUCT REVIEWS SECTION (NEW) -->
+    <!-- Reviews Section -->
     <div style="background: white; border-radius: 8px; padding: 30px; margin-bottom: 40px;">
         <h2 style="font-size: 20px; color: #333; margin-bottom: 20px;">
             <i class="fas fa-comments" style="color: #1976d2;"></i> Customer Reviews
         </h2>
         
-        <!-- Review Form (Only for logged in users who haven't reviewed) -->
-        {% if session.get('user_id') %}
-            {% set has_reviewed = false %}
-            {% for review in reviews %}
-                {% if review.user_id == session.get('user_id') %}
-                    {% set has_reviewed = true %}
-                {% endif %}
-            {% endfor %}
-            
-            {% if not has_reviewed %}
-            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
-                <h3 style="font-size: 16px; color: #333; margin-bottom: 15px;">Write a Review</h3>
-                <form method="POST" action="{{ url_for('add_review', product_id=product.id) }}">
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333; font-size: 14px;">
-                            Your Rating *
-                        </label>
-                        <div style="display: flex; gap: 5px;">
-                            {% for i in range(1, 6) %}
-                            <label style="cursor: pointer;">
-                                <input type="radio" name="rating" value="{{ i }}" required style="display: none;">
-                                <i class="far fa-star" style="font-size: 24px; color: #ddd;" 
-                                   onmouseover="this.classList.replace('far','fas'); this.style.color='#ffc107'"
-                                   onmouseout="this.classList.replace('fas','far'); this.style.color='#ddd'"></i>
-                            </label>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333; font-size: 14px;">
-                            Your Review
-                        </label>
-                        <textarea name="comment" rows="4" 
-                                  placeholder="Share your experience with this product..."
-                                  style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; resize: vertical;"></textarea>
-                    </div>
-                    
-                    <button type="submit" 
-                            style="padding: 12px 30px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600;">
-                        <i class="fas fa-paper-plane"></i> Submit Review
-                    </button>
-                </form>
-            </div>
-            {% else %}
-            <div style="background: #e8f5e9; padding: 15px; border-radius: 8px; margin-bottom: 30px; color: #4caf50;">
-                <i class="fas fa-check-circle"></i> You have already reviewed this product. Thank you!
-            </div>
-            {% endif %}
-        {% else %}
-        <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin-bottom: 30px; color: #1976d2;">
-            <i class="fas fa-info-circle"></i> 
-            <a href="{{ url_for('login') }}" style="color: #1976d2; font-weight: 600;">Login</a> 
-            to write a review.
-        </div>
-        {% endif %}
-        
-        <!-- Reviews List -->
         {% if reviews %}
             {% for review in reviews %}
             <div style="padding: 20px 0; border-bottom: {% if not loop.last %}1px solid #eee{% endif %};">
@@ -298,118 +147,90 @@
                         </div>
                         <div>
                             <p style="font-weight: 600; color: #333; margin: 0;">{{ review.username if review.username else 'Anonymous' }}</p>
-                            <p style="font-size: 12px; color: #999; margin: 0;">{{ review.created_at.strftime('%B %d, %Y') }}</p>
+                            <p style="font-size: 12px; color: #999; margin: 0;">{{ review.created_at.strftime('%B %d, %Y') if review.created_at else 'Recent' }}</p>
                         </div>
                     </div>
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span style="color: #ffc107;">
-                            {% for i in range(5) %}
-                                {% if i < review.rating %}
-                                    <i class="fas fa-star" style="font-size: 14px;"></i>
-                                {% else %}
-                                    <i class="far fa-star" style="font-size: 14px;"></i>
-                                {% endif %}
-                            {% endfor %}
-                        </span>
-                        {% if session.get('is_admin') %}
-                        <form method="POST" action="{{ url_for('delete_review', product_id=product.id, review_id=review.id) }}" 
-                              style="display: inline;" onsubmit="return confirm('Delete this review?')">
-                            <button type="submit" 
-                                    style="background: none; border: none; color: #f44336; cursor: pointer; font-size: 14px;">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </form>
-                        {% endif %}
-                    </div>
+                    <span style="color: #ffc107;">
+                        {% for i in range(5) %}
+                            {% if i < review.rating %}
+                                <i class="fas fa-star" style="font-size: 14px;"></i>
+                            {% else %}
+                                <i class="far fa-star" style="font-size: 14px;"></i>
+                            {% endif %}
+                        {% endfor %}
+                    </span>
                 </div>
                 <p style="color: #666; line-height: 1.6; margin: 0;">{{ review.comment }}</p>
             </div>
             {% endfor %}
         {% else %}
-        <p style="color: #999; text-align: center; padding: 20px;">
-            <i class="far fa-comment"></i> No reviews yet. Be the first to review!
-        </p>
+        <p style="color: #999; text-align: center; padding: 20px;">No reviews yet.</p>
         {% endif %}
     </div>
 
-    <!-- You May Like -->
+    <!-- Related Products - ONLY ONE SECTION -->
+    {% if related_products %}
     <div style="background: white; border-radius: 8px; padding: 30px; margin-bottom: 40px;">
-        <h3 style="font-size: 20px; margin-bottom: 20px; color: #333;">You may like</h3>
-        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px;">
-            {% for i in range(5) %}
-            <div style="border: 1px solid #eee; border-radius: 8px; padding: 15px;">
-                <img src="https://via.placeholder.com/200x150" alt="Product" style="width: 100%; height: 150px; object-fit: cover; border-radius: 4px; margin-bottom: 10px;">
-                <h4 style="font-size: 14px; color: #333; margin-bottom: 8px;">Men Blazers Sets Elegant Formal</h4>
-                <p style="font-size: 14px; color: #666;">$7.00 - $99.50</p>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-
-    <!-- Related Products -->
-    <div class="related-products" style="background: white; border-radius: 8px; padding: 30px; margin-bottom: 40px;">
-        <h2 style="font-size: 20px; margin-bottom: 20px; color: #333;">Related products</h2>
-        <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px;">
+        <h2 style="font-size: 20px; margin-bottom: 20px; color: #333;">Related Products</h2>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
             {% for rp in related_products %}
             <div style="border: 1px solid #eee; border-radius: 8px; padding: 15px; text-align: center;">
-                <img src="{{ url_for('static', filename='img/' + rp.image) if rp.image else 'https://via.placeholder.com/150x150' }}" 
+                <!-- ✅ FIXED: Removed extra spaces -->
+                <img src="{{ url_for('static', filename='img/' + rp.image) if rp.image else 'https://via.placeholder.com/200x200' }}" 
                      alt="{{ rp.name }}" 
-                     style="width: 100%; height: 150px; object-fit: cover; border-radius: 4px; margin-bottom: 10px;">
+                     style="width: 100%; height: 200px; object-fit: cover; border-radius: 4px; margin-bottom: 10px;">
                 <h4 style="font-size: 14px; color: #333; margin-bottom: 8px;">{{ rp.name }}</h4>
-                <p style="font-size: 14px; color: #666;">$32.00-$40.00</p>
+                <p style="font-size: 16px; font-weight: bold; color: #1976d2;">${{ rp.price }}</p>
+                <a href="{{ url_for('product_detail', product_id=rp.id) }}" style="display: inline-block; padding: 8px 20px; background: #1976d2; color: white; text-decoration: none; border-radius: 4px; font-size: 14px; margin-top: 10px;">
+                    View
+                </a>
             </div>
             {% endfor %}
         </div>
     </div>
+    {% endif %}
 
-    <!-- Promo Banner -->
-    <div style="background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%); border-radius: 8px; padding: 30px; display: flex; justify-content: space-between; align-items: center; color: white; margin-bottom: 40px;">
-        <div>
-            <h3 style="font-size: 20px; margin-bottom: 5px;">Super discount on more than 100 USD</h3>
-            <p style="opacity: 0.9; font-size: 14px;">Have you ever finally just write dummy info</p>
-        </div>
-        <button style="padding: 12px 30px; background: #ff9800; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600;">
-            Shop now
-        </button>
-    </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
 <script>
-// Change Image Function
 function changeImage(thumb) {
-    document.querySelector('.main-image img').src = thumb.src.replace('100x100', '400x400');
-    document.querySelectorAll('.thumbnail-images img').forEach(img => img.classList.remove('active'));
-    thumb.classList.add('active');
+    document.getElementById('mainImg').src = thumb.src;
+    document.querySelectorAll('.thumbnail-images img').forEach(function(img) {
+        img.style.borderColor = '#ddd';
+    });
+    thumb.style.borderColor = '#1976d2';
 }
 
-// Add to Cart Function
 function addToCart(productId) {
-    fetch(`/add_to_cart/${productId}`, {
+    fetch('/add_to_cart/' + productId, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({quantity: 1})
     })
-    .then(response => response.json())
-    .then(data => {
+    .then(function(response) { return response.json(); })
+    .then(function(data) {
         if (data.success) {
-            alert('✅ Product added to cart!');
-            const cartCount = document.getElementById('cart-count');
-            if (cartCount) {
-                let currentCount = parseInt(cartCount.innerText) || 0;
-                cartCount.innerText = currentCount + 1;
-            }
+            alert('Product added to cart!');
+            location.reload();
         } else {
-            alert('🔐 Please login to add items to cart');
+            alert('Please login first');
             window.location.href = '/login';
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('❌ Error adding to cart');
+    });
+}
+
+function addToWishlist(productId) {
+    fetch('/add_to_wishlist/' + productId, { method: 'POST' })
+    .then(function(response) { return response.json(); })
+    .then(function(data) {
+        if (data.success) {
+            alert('Added to wishlist!');
+        } else {
+            alert('Please login first');
+            window.location.href = '/login';
+        }
     });
 }
 </script>

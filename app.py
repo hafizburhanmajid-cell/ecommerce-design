@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for, flash
 import pymysql
-pymysql.install_as_MySQLdb()  #  Ye line zaroor add karein!
+pymysql.install_as_MySQLdb()
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 from config import Config
-from decimal import Decimal  #  Decimal import karein
+from decimal import Decimal
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -14,13 +14,13 @@ def get_db_connection():
     return pymysql.connect(
         host=Config.MYSQL_HOST,
         user=Config.MYSQL_USER,
-        password='anummajid@123',
+        password=Config.MYSQL_PASSWORD,  # ✅ Fixed: Config se password
         database=Config.MYSQL_DB,
         cursorclass=pymysql.cursors.DictCursor,
         charset='utf8mb4'
     )
 
-# ============  HELPER FUNCTION - Decimal to Float Convert ============
+# Helper Function - Decimal to Float Convert
 def convert_decimal_to_float(data):
     """Convert Decimal values to float for template compatibility"""
     if isinstance(data, dict):
@@ -35,7 +35,7 @@ def convert_decimal_to_float(data):
                         item[key] = float(value)
     return data
 
-# ============  GLOBAL CONTEXT PROCESSOR ============
+# Global Context Processor
 @app.context_processor
 def inject_categories():
     try:
@@ -77,10 +77,7 @@ def index():
     featured_products = cursor.fetchall()
     cursor.close()
     conn.close()
-    
-    #  Convert Decimal to float
     featured_products = convert_decimal_to_float(featured_products)
-    
     return render_template('index.html', featured_products=featured_products)
 
 # Product Listing Page
@@ -100,15 +97,12 @@ def products():
     if category:
         query += " AND c.name = %s"
         params.append(category)
-    
     if search:
         query += " AND (p.name LIKE %s OR p.description LIKE %s)"
         params.extend([f'%{search}%', f'%{search}%'])
-    
     if min_price:
         query += " AND p.price >= %s"
         params.append(min_price)
-    
     if max_price:
         query += " AND p.price <= %s"
         params.append(max_price)
@@ -117,13 +111,10 @@ def products():
     all_products = cursor.fetchall()
     cursor.close()
     conn.close()
-    
-    #  Convert Decimal to float
     all_products = convert_decimal_to_float(all_products)
-    
     return render_template('products.html', products=all_products)
 
-#  Product Detail Page - UPDATED with Reviews
+# Product Detail Page - FIXED
 @app.route('/product/<int:product_id>')
 def product_detail(product_id):
     conn = get_db_connection()
@@ -147,7 +138,7 @@ def product_detail(product_id):
         if product.get('rating'):
             product['rating'] = float(product['rating'])
         
-        # Get reviews for this product
+        # Get reviews
         cursor.execute("""
             SELECT r.*, u.username 
             FROM reviews r 
@@ -157,15 +148,24 @@ def product_detail(product_id):
         """, (product_id,))
         reviews = cursor.fetchall()
         
-        # Get related products
-        cursor.execute("""
-            SELECT * FROM products 
-            WHERE category_id = %s AND id != %s 
-            LIMIT 6
-        """, (product['category_id'], product_id))
+        # ✅ FIXED: Related products - Handle NULL category_id
+        if product.get('category_id'):
+            cursor.execute("""
+                SELECT * FROM products 
+                WHERE category_id = %s AND id != %s 
+                LIMIT 4
+            """, (product['category_id'], product_id))
+        else:
+            cursor.execute("""
+                SELECT * FROM products 
+                WHERE id != %s 
+                ORDER BY RAND() 
+                LIMIT 4
+            """, (product_id,))
+        
         related_products = cursor.fetchall()
         
-        # Convert Decimal to float for reviews and related products
+        # Convert Decimal to float
         reviews = convert_decimal_to_float(reviews)
         related_products = convert_decimal_to_float(related_products)
     else:
@@ -180,7 +180,7 @@ def product_detail(product_id):
                           reviews=reviews, 
                           related_products=related_products)
 
-# Cart Page -  FIXED Decimal Error
+# Cart Page
 @app.route('/cart')
 def cart():
     if 'user_id' not in session:
@@ -198,7 +198,6 @@ def cart():
     cursor.close()
     conn.close()
     
-    #  Convert Decimal to float and calculate total safely
     total = 0
     for item in cart_items:
         if item.get('price'):
@@ -206,15 +205,13 @@ def cart():
             total += item['price'] * item.get('quantity', 1)
     
     cart_items = convert_decimal_to_float(cart_items)
-    
     return render_template('cart.html', cart_items=cart_items, total=float(total))
 
-#  CHECKOUT ROUTE
+# Checkout Route
 @app.route('/checkout', methods=['GET', 'POST'])
 @login_required
 def checkout():
     if request.method == 'GET':
-        # Get cart items
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute("""
@@ -224,21 +221,16 @@ def checkout():
             WHERE c.user_id = %s
         """, (session['user_id'],))
         cart_items = cursor.fetchall()
-        
-        # Calculate total
         total = sum(item['price'] * item['quantity'] for item in cart_items)
-        
         cursor.close()
         conn.close()
         
         if not cart_items:
             flash('Your cart is empty!', 'warning')
             return redirect(url_for('cart'))
-        
         return render_template('checkout.html', cart_items=cart_items, total=total)
     
     elif request.method == 'POST':
-        # Get form data
         first_name = request.form['first_name']
         last_name = request.form['last_name']
         email = request.form['email']
@@ -247,10 +239,8 @@ def checkout():
         city = request.form['city']
         postal_code = request.form['postal_code']
         country = request.form['country']
-        notes = request.form.get('notes', '')
         payment_method = request.form['payment_method']
         
-        # Get cart items
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute("""
@@ -261,15 +251,11 @@ def checkout():
         """, (session['user_id'],))
         cart_items = cursor.fetchall()
         
-        # Calculate total
         total = sum(item['price'] * item['quantity'] for item in cart_items)
-        tax = total * 0.1  # 10% tax
+        tax = total * 0.1
         final_total = total + tax
-        
-        # Create shipping address
         shipping_address = f"{address}, {city}, {postal_code}, {country}"
         
-        # Create order
         cursor.execute("""
             INSERT INTO orders (user_id, total_price, shipping_address, phone_number, status)
             VALUES (%s, %s, %s, %s, 'pending')
@@ -277,21 +263,16 @@ def checkout():
         
         order_id = cursor.lastrowid
         
-        # Create order items
         for item in cart_items:
             cursor.execute("""
                 INSERT INTO order_items (order_id, product_id, quantity, price_at_purchase)
                 VALUES (%s, %s, %s, %s)
             """, (order_id, item['product_id'], item['quantity'], item['price']))
-            
-            # Update product stock
             cursor.execute("""
                 UPDATE products SET stock = stock - %s WHERE id = %s
             """, (item['quantity'], item['product_id']))
         
-        # Clear cart
         cursor.execute("DELETE FROM cart WHERE user_id = %s", (session['user_id'],))
-        
         conn.commit()
         cursor.close()
         conn.close()
@@ -299,7 +280,7 @@ def checkout():
         flash('Order placed successfully!', 'success')
         return redirect(url_for('order_success', order_id=order_id))
 
-#  ORDER SUCCESS ROUTE
+# Order Success Route
 @app.route('/order-success/<int:order_id>')
 @login_required
 def order_success(order_id):
@@ -314,10 +295,9 @@ def order_success(order_id):
     if not order:
         flash('Order not found!', 'error')
         return redirect(url_for('index'))
-    
     return render_template('order_success.html', order=order)
 
-#  MY ORDERS ROUTE
+# My Orders Route
 @app.route('/my-orders')
 @login_required
 def my_orders():
@@ -331,10 +311,9 @@ def my_orders():
     orders = cursor.fetchall()
     cursor.close()
     conn.close()
-    
     return render_template('my_orders.html', orders=orders)
 
-#  PROFILE ROUTE
+# Profile Route
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
@@ -351,21 +330,18 @@ def profile():
             UPDATE users SET username = %s, email = %s, phone = %s, address = %s
             WHERE id = %s
         """, (username, email, phone, address, session['user_id']))
-        
         conn.commit()
         session['username'] = username
         flash('Profile updated successfully!', 'success')
         return redirect(url_for('profile'))
     
-    # Get user data
     cursor.execute("SELECT * FROM users WHERE id = %s", (session['user_id'],))
     user = cursor.fetchone()
     cursor.close()
     conn.close()
-    
     return render_template('profile.html', user=user)
 
-#  CHANGE PASSWORD ROUTE
+# Change Password Route
 @app.route('/change-password', methods=['POST'])
 @login_required
 def change_password():
@@ -376,7 +352,6 @@ def change_password():
     if new_password != confirm_password:
         flash('Passwords do not match!', 'error')
         return redirect(url_for('profile'))
-    
     if len(new_password) < 6:
         flash('Password must be at least 6 characters long!', 'error')
         return redirect(url_for('profile'))
@@ -392,7 +367,6 @@ def change_password():
         flash('Current password is incorrect!', 'error')
         return redirect(url_for('profile'))
     
-    # Update password
     hashed_password = generate_password_hash(new_password)
     cursor.execute("UPDATE users SET password = %s WHERE id = %s", (hashed_password, session['user_id']))
     conn.commit()
@@ -402,7 +376,7 @@ def change_password():
     flash('Password changed successfully!', 'success')
     return redirect(url_for('profile'))
 
-#  SEARCH FUNCTIONALITY
+# Search Functionality
 @app.route('/search')
 def search():
     query = request.args.get('q', '')
@@ -413,22 +387,18 @@ def search():
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    # Build query
     sql = "SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE 1=1"
     params = []
     
     if query:
         sql += " AND (p.name LIKE %s OR p.description LIKE %s)"
         params.extend([f'%{query}%', f'%{query}%'])
-    
     if category:
         sql += " AND c.name = %s"
         params.append(category)
-    
     if min_price:
         sql += " AND p.price >= %s"
         params.append(min_price)
-    
     if max_price:
         sql += " AND p.price <= %s"
         params.append(max_price)
@@ -437,20 +407,13 @@ def search():
     products = cursor.fetchall()
     cursor.close()
     conn.close()
-    
-    # Convert Decimal to float
     products = convert_decimal_to_float(products)
-    
-    return render_template('search.html', 
-                          products=products, 
-                          query=query, 
-                          category=category)
+    return render_template('search.html', products=products, query=query, category=category)
 
-#  AJAX SEARCH - Real-time suggestions
+# AJAX Search
 @app.route('/api/search')
 def api_search():
     query = request.args.get('q', '')
-    
     if len(query) < 2:
         return jsonify([])
     
@@ -462,12 +425,10 @@ def api_search():
         WHERE name LIKE %s OR description LIKE %s 
         LIMIT 10
     """, (f'%{query}%', f'%{query}%'))
-    
     products = cursor.fetchall()
     cursor.close()
     conn.close()
     
-    # Convert to JSON format
     results = []
     for product in products:
         results.append({
@@ -476,10 +437,9 @@ def api_search():
             'price': float(product['price']),
             'image': product['image']
         })
-    
     return jsonify(results)
 
-#  WISHLIST ROUTES
+# Wishlist Routes
 @app.route('/wishlist')
 @login_required
 def wishlist():
@@ -495,10 +455,7 @@ def wishlist():
     wishlist_items = cursor.fetchall()
     cursor.close()
     conn.close()
-    
-    # Convert Decimal to float
     wishlist_items = convert_decimal_to_float(wishlist_items)
-    
     return render_template('wishlist.html', wishlist_items=wishlist_items)
 
 @app.route('/add_to_wishlist/<int:product_id>', methods=['POST'])
@@ -506,7 +463,6 @@ def wishlist():
 def add_to_wishlist(product_id):
     conn = get_db_connection()
     cursor = conn.cursor()
-    
     try:
         cursor.execute("""
             INSERT INTO wishlist (user_id, product_id) 
@@ -516,7 +472,7 @@ def add_to_wishlist(product_id):
         cursor.close()
         conn.close()
         return jsonify({'success': True, 'message': 'Added to wishlist'})
-    except Exception as e:
+    except:
         cursor.close()
         conn.close()
         return jsonify({'success': False, 'message': 'Already in wishlist'})
@@ -533,10 +489,9 @@ def remove_from_wishlist(product_id):
     conn.commit()
     cursor.close()
     conn.close()
-    
     return jsonify({'success': True, 'message': 'Removed from wishlist'})
 
-#  PRODUCT REVIEWS ROUTES (NEW)
+# Product Reviews Routes
 @app.route('/product/<int:product_id>/review', methods=['POST'])
 @login_required
 def add_review(product_id):
@@ -549,8 +504,6 @@ def add_review(product_id):
     
     conn = get_db_connection()
     cursor = conn.cursor()
-    
-    # Check if user already reviewed
     cursor.execute("SELECT id FROM reviews WHERE product_id = %s AND user_id = %s", 
                    (product_id, session['user_id']))
     
@@ -560,11 +513,8 @@ def add_review(product_id):
         flash('You have already reviewed this product!', 'warning')
         return redirect(url_for('product_detail', product_id=product_id))
     
-    # Insert review
     cursor.execute("INSERT INTO reviews (product_id, user_id, rating, comment) VALUES (%s, %s, %s, %s)",
                    (product_id, session['user_id'], rating, comment))
-    
-    # Update product average rating
     cursor.execute("""
         UPDATE products SET rating = (SELECT AVG(rating) FROM reviews WHERE product_id = %s)
         WHERE id = %s
@@ -573,7 +523,6 @@ def add_review(product_id):
     conn.commit()
     cursor.close()
     conn.close()
-    
     flash('Review submitted successfully!', 'success')
     return redirect(url_for('product_detail', product_id=product_id))
 
@@ -582,20 +531,15 @@ def add_review(product_id):
 def delete_review(product_id, review_id):
     conn = get_db_connection()
     cursor = conn.cursor()
-    
     cursor.execute("DELETE FROM reviews WHERE id = %s AND product_id = %s", 
                    (review_id, product_id))
-    
-    # Recalculate average rating
     cursor.execute("""
         UPDATE products SET rating = COALESCE((SELECT AVG(rating) FROM reviews WHERE product_id = %s), 4.5)
         WHERE id = %s
     """, (product_id, product_id))
-    
     conn.commit()
     cursor.close()
     conn.close()
-    
     flash('Review deleted successfully!', 'success')
     return redirect(url_for('product_detail', product_id=product_id))
 
@@ -623,7 +567,6 @@ def add_to_cart(product_id):
     conn.commit()
     cursor.close()
     conn.close()
-    
     return jsonify({'success': True, 'message': 'Added to cart'})
 
 # Remove from Cart
@@ -631,14 +574,12 @@ def add_to_cart(product_id):
 def remove_from_cart(cart_id):
     if 'user_id' not in session:
         return jsonify({'success': False})
-    
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("DELETE FROM cart WHERE id = %s AND user_id = %s", (cart_id, session['user_id']))
     conn.commit()
     cursor.close()
     conn.close()
-    
     return jsonify({'success': True})
 
 # Update Cart Quantity
@@ -646,7 +587,6 @@ def remove_from_cart(cart_id):
 def update_cart(cart_id):
     if 'user_id' not in session:
         return jsonify({'success': False})
-    
     quantity = request.json.get('quantity', 1)
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -655,7 +595,6 @@ def update_cart(cart_id):
     conn.commit()
     cursor.close()
     conn.close()
-    
     return jsonify({'success': True})
 
 # Login
@@ -680,7 +619,6 @@ def login():
             return redirect(url_for('index'))
         else:
             return render_template('login.html', error='Invalid credentials')
-    
     return render_template('login.html')
 
 # Register
@@ -692,14 +630,11 @@ def register():
         password = request.form['password']
         confirm_password = request.form.get('confirm_password', '')
         
-        # Validation
         if password != confirm_password:
             return render_template('register.html', error='Passwords do not match')
-        
         if len(password) < 6:
             return render_template('register.html', error='Password must be at least 6 characters long')
         
-        # Hash password
         hashed_password = generate_password_hash(password)
         
         conn = get_db_connection()
@@ -712,11 +647,10 @@ def register():
             conn.close()
             flash('Registration successful! Please login.', 'success')
             return redirect(url_for('login'))
-        except Exception as e:
+        except:
             cursor.close()
             conn.close()
             return render_template('register.html', error='Username or email already exists')
-    
     return render_template('register.html')
 
 # Logout
@@ -726,44 +660,32 @@ def logout():
     flash('You have been logged out.', 'success')
     return redirect(url_for('index'))
 
-#  UPDATED ADMIN ROUTE
+# Admin Route
 @app.route('/admin')
 @admin_required
 def admin():
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    # Get products
     cursor.execute("SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id")
     products = cursor.fetchall()
-    
-    # Get categories
     cursor.execute("SELECT * FROM categories")
     categories = cursor.fetchall()
-    
-    # Get orders
     cursor.execute("SELECT * FROM orders ORDER BY created_at DESC")
     orders = cursor.fetchall()
-    
-    # Get users
     cursor.execute("SELECT * FROM users")
     users = cursor.fetchall()
     
-    # Get statistics
     cursor.execute("SELECT COUNT(*) as count FROM orders")
     total_orders = cursor.fetchone()['count']
-    
     cursor.execute("SELECT COUNT(*) as count FROM users")
     total_users = cursor.fetchone()['count']
-    
     cursor.execute("SELECT SUM(total_price) as revenue FROM orders WHERE status != 'cancelled'")
     result = cursor.fetchone()
     total_revenue = result['revenue'] if result['revenue'] else 0
     
     cursor.close()
     conn.close()
-    
-    # Convert Decimal to float
     products = convert_decimal_to_float(products)
     
     return render_template('admin.html', 
@@ -792,7 +714,6 @@ def add_product():
     conn.commit()
     cursor.close()
     conn.close()
-    
     flash('Product added successfully!', 'success')
     return redirect(url_for('admin'))
 

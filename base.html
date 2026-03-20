@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- ✅ RESPONSIVE CSS (Added for Mobile Testing) -->
+    <!--  RESPONSIVE CSS (Added for Mobile Testing) -->
     <style>
         /* Mobile Responsive Styles */
         @media (max-width: 1024px) {
@@ -247,7 +247,7 @@
                     </form>
                 </div>
                 
-                <!-- ✅ UPDATED HEADER ACTIONS -->
+                <!--  UPDATED HEADER ACTIONS -->
                 <div class="header-actions">
                     <a href="{{ url_for('login') }}"><i class="fas fa-user"></i> Profile</a>
                     <a href="#"><i class="fas fa-envelope"></i> Message</a>
@@ -266,7 +266,7 @@
                     <i class="fas fa-bars"></i> All category
                 </button>
                 
-                <!-- ✅ Navigation Links with Category Filters -->
+                <!--  Navigation Links with Category Filters -->
                 <a href="{{ url_for('products') }}">Hot offers</a>
                 <a href="{{ url_for('products', category='Gift Boxes') }}">Gift boxes</a>
                 <a href="{{ url_for('products', category='Projects') }}">Projects</a>
@@ -362,7 +362,7 @@
         </div>
     </footer>
 
-    <!-- ✅ Mobile Menu Toggle Script -->
+    <!--  Mobile Menu Toggle Script -->
     <script>
         function toggleMobileMenu() {
             const navbar = document.querySelector('.navbar');

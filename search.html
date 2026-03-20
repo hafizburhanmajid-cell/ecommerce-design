@@ -138,20 +138,20 @@ function addToCart(productId) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert('✅ Product added to cart!');
+            alert(' Product added to cart!');
             const cartCount = document.getElementById('cart-count');
             if (cartCount) {
                 let currentCount = parseInt(cartCount.innerText) || 0;
                 cartCount.innerText = currentCount + 1;
             }
         } else {
-            alert('🔐 Please login to add items to cart');
+            alert(' Please login to add items to cart');
             window.location.href = '/login';
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('❌ Error adding to cart');
+        alert(' Error adding to cart');
     });
 }
 </script>

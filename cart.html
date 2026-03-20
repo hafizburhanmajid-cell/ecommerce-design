@@ -160,7 +160,7 @@
         <div class="saved-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
             {% for i in range(4) %}
             <div class="saved-item" style="border: 1px solid #eee; border-radius: 8px; padding: 15px; text-align: center;">
-                <img src="https://via.placeholder.com/200x150" alt="Product" style="width: 100%; height: 150px; object-fit: cover; border-radius: 4px; margin-bottom: 15px;">
+                <img src="{{ url_for('static', filename='img/smartwatch.jpg') }}"alt="Product" style="width: 100%; height: 150px; object-fit: cover; border-radius: 4px; margin-bottom: 15px;">
                 <p style="font-size: 16px; font-weight: bold; color: #333; margin-bottom: 8px;">$99.50</p>
                 <p style="font-size: 13px; color: #666; margin-bottom: 15px; line-height: 1.4;">GoPro HERO6 4K Action Camera - Black</p>
                 <button class="btn-move" style="width: 100%; padding: 10px; background: #e3f2fd; color: #1976d2; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px;">
@@ -187,40 +187,55 @@
 {% block scripts %}
 <script>
 function removeFromCart(cartId) {
-    fetch(`/remove_from_cart/${cartId}`, {
+    var url = '/remove_from_cart/' + cartId;
+    fetch(url, {
         method: 'POST'
     })
-    .then(response => response.json())
-    .then(data => {
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
         if (data.success) {
-            document.querySelector(`[data-cart-id="${cartId}"]`).remove();
+            var element = document.querySelector('[data-cart-id="' + cartId + '"]');
+            if (element) {
+                element.remove();
+            }
             location.reload();
         }
+    })
+    .catch(function(error) {
+        console.error('Error:', error);
     });
 }
 
 function updateQuantity(cartId, quantity) {
-    fetch(`/update_cart/${cartId}`, {
+    var url = '/update_cart/' + cartId;
+    fetch(url, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({quantity: parseInt(quantity)})
     })
-    .then(response => response.json())
-    .then(data => {
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
         if (data.success) {
             location.reload();
         }
+    })
+    .catch(function(error) {
+        console.error('Error:', error);
     });
 }
 
 function removeAll() {
-    const items = document.querySelectorAll('.cart-item');
-    items.forEach(item => {
-        const cartId = item.dataset.cartId;
+    var items = document.querySelectorAll('.cart-item');
+    for (var i = 0; i < items.length; i++) {
+        var cartId = items[i].dataset.cartId;
         removeFromCart(cartId);
-    });
+    }
 }
 </script>
 {% endblock %}

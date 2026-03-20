@@ -6,7 +6,7 @@ try:
     conn = pymysql.connect(
         host='localhost',
         user='root',
-        password='Emaan123',
+        password='anummajid@123',
         database='ecommerce_db',
         port=3306
     )

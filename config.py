@@ -11,7 +11,7 @@ class Config:
     # Database Configuration (Match your .env variables)
     MYSQL_HOST = os.environ.get('DB_HOST', 'localhost')
     MYSQL_USER = os.environ.get('DB_USER', 'root')
-    MYSQL_PASSWORD = os.environ.get('DB_PASSWORD', 'Emaan123')
+    MYSQL_PASSWORD = os.environ.get('DB_PASSWORD', 'anummajid@123')
     MYSQL_DB = os.environ.get('DB_NAME', 'ecommerce_db')
     
     # Flask Configuration

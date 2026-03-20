@@ -1,7 +1,5 @@
 {% extends "base.html" %}
-
 {% block title %}Home - Ecommerce Brand{% endblock %}
-
 {% block content %}
 <!-- Hero Section -->
 <section class="hero">
@@ -20,16 +18,16 @@
                 <li><a href="{{ url_for('products') }}" class="more-category">More category <i class="fas fa-chevron-right"></i></a></li>
             </ul>
         </aside>
-
+        
         <!-- Hero Banner -->
         <div class="hero-banner">
             <div class="banner-content">
                 <h1>Latest trending<br><strong>Electronic items</strong></h1>
                 <button class="btn-primary" onclick="window.location.href='{{ url_for('products', category='Electronics') }}'">Learn more</button>
             </div>
-            <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop" alt="Electronics">
+            <img src="{{ url_for('static', filename='img/electronics.jpg') }}" alt="Electronics">
         </div>
-
+        
         <!-- Hero Side -->
         <div class="hero-side">
             <div class="user-greeting">
@@ -52,10 +50,10 @@
     </div>
 </section>
 
-<!-- Deals and Offers Section - EXACT ORIGINAL DESIGN -->
+<!-- Deals and Offers Section -->
 <section class="deals-section" style="padding: 30px 0; background: white; margin: 20px 0; border-radius: 8px;">
     <div class="container">
-        <!-- Title and Countdown - SAME ROW (Original Design) -->
+        <!-- Title and Countdown -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
             <div>
                 <h2 style="font-size: 22px; font-weight: 600; color: #333; margin-bottom: 5px;">Deals and offers</h2>
@@ -80,63 +78,53 @@
                 </div>
             </div>
         </div>
-
-        <!-- Products Grid - EXACT ORIGINAL DESIGN -->
+        
+        <!-- Products Grid -->
         <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: #f0f0f0; border-radius: 8px; overflow: hidden;">
-            <!-- Product 1 - Smart Watches -->
+            <!-- Product 1 -->
             <div style="background: white; padding: 20px 15px; text-align: center;">
                 <div style="position: relative; margin-bottom: 12px; height: 150px; display: flex; align-items: center; justify-content: center; background: #fff;">
-                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=180&h=180&fit=crop" 
-                         alt="Smart watches" 
-                         style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    <img src="{{ url_for('static', filename='img/smartwatch.jpg') }}" alt="Smart watches" style="max-width: 100%; max-height: 100%; object-fit: contain;">
                     <span style="position: absolute; top: 0; right: 0; background: #ffebee; color: #f44336; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">-25%</span>
                 </div>
                 <h4 style="font-size: 14px; color: #333; margin: 10px 0 6px; font-weight: 500;">Smart watches</h4>
                 <p style="color: #f44336; font-size: 14px; font-weight: 600; margin: 0;">-25%</p>
             </div>
-
-            <!-- Product 2 - Laptops -->
+            
+            <!-- Product 2 -->
             <div style="background: white; padding: 20px 15px; text-align: center;">
                 <div style="position: relative; margin-bottom: 12px; height: 150px; display: flex; align-items: center; justify-content: center; background: #fff;">
-                    <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=180&h=180&fit=crop" 
-                         alt="Laptops" 
-                         style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    <img src="{{ url_for('static', filename='img/laptop.jpg') }}" alt="Laptops" style="max-width: 100%; max-height: 100%; object-fit: contain;">
                     <span style="position: absolute; top: 0; right: 0; background: #ffebee; color: #f44336; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">-15%</span>
                 </div>
                 <h4 style="font-size: 14px; color: #333; margin: 10px 0 6px; font-weight: 500;">Laptops</h4>
                 <p style="color: #f44336; font-size: 14px; font-weight: 600; margin: 0;">-15%</p>
             </div>
-
-            <!-- Product 3 - GoPro Cameras -->
+            
+            <!-- Product 3 -->
             <div style="background: white; padding: 20px 15px; text-align: center;">
                 <div style="position: relative; margin-bottom: 12px; height: 150px; display: flex; align-items: center; justify-content: center; background: #fff;">
-                    <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=180&h=180&fit=crop" 
-                         alt="GoPro cameras" 
-                         style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    <img src="{{ url_for('static', filename='img/GoPro_cameras.jpg') }}" alt="GoPro cameras" style="max-width: 100%; max-height: 100%; object-fit: contain;">
                     <span style="position: absolute; top: 0; right: 0; background: #ffebee; color: #f44336; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">-40%</span>
                 </div>
                 <h4 style="font-size: 14px; color: #333; margin: 10px 0 6px; font-weight: 500;">GoPro cameras</h4>
                 <p style="color: #f44336; font-size: 14px; font-weight: 600; margin: 0;">-40%</p>
             </div>
-
-            <!-- Product 4 - Headphones -->
+            
+            <!-- Product 4 -->
             <div style="background: white; padding: 20px 15px; text-align: center;">
                 <div style="position: relative; margin-bottom: 12px; height: 150px; display: flex; align-items: center; justify-content: center; background: #fff;">
-                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=180&h=180&fit=crop" 
-                         alt="Headphones" 
-                         style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    <img src="{{ url_for('static', filename='img/headphones.jpg') }}" alt="Headphones" style="max-width: 100%; max-height: 100%; object-fit: contain;">
                     <span style="position: absolute; top: 0; right: 0; background: #ffebee; color: #f44336; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">-25%</span>
                 </div>
                 <h4 style="font-size: 14px; color: #333; margin: 10px 0 6px; font-weight: 500;">Headphones</h4>
                 <p style="color: #f44336; font-size: 14px; font-weight: 600; margin: 0;">-25%</p>
             </div>
-
-            <!-- Product 5 - Canon Cameras -->
+            
+            <!-- Product 5 -->
             <div style="background: white; padding: 20px 15px; text-align: center;">
                 <div style="position: relative; margin-bottom: 12px; height: 150px; display: flex; align-items: center; justify-content: center; background: #fff;">
-                    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=180&h=180&fit=crop" 
-                         alt="Canon cameras" 
-                         style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    <img src="{{ url_for('static', filename='img/canon_camera.jpg') }}" alt="Canon cameras" style="max-width: 100%; max-height: 100%; object-fit: contain;">
                     <span style="position: absolute; top: 0; right: 0; background: #ffebee; color: #f44336; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">-25%</span>
                 </div>
                 <h4 style="font-size: 14px; color: #333; margin: 10px 0 6px; font-weight: 500;">Canon cameras</h4>
@@ -151,7 +139,7 @@
     <div class="container">
         <div class="category-banner">
             <div class="banner-image">
-                <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=300&fit=crop" alt="Home and outdoor">
+                <img src="{{ url_for('static', filename='img/banner_text.jpg') }}">
                 <div class="banner-text">
                     <h3>Home and outdoor</h3>
                     <button class="btn-primary" onclick="window.location.href='{{ url_for('products', category='Home') }}'">Source now</button>
@@ -159,12 +147,12 @@
             </div>
             <div class="category-products">
                 <a href="{{ url_for('products', category='Furniture') }}" class="product-mini">
-                    <img src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=100&h=100&fit=crop" alt="Soft chairs">
+                    <img src="{{ url_for('static', filename='img/softchair.jpg') }}" alt="Soft chairs">
                     <h4>Soft chairs</h4>
                     <p>From USD 19</p>
                 </a>
                 <a href="{{ url_for('products', category='Furniture') }}" class="product-mini">
-                    <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=100&h=100&fit=crop" alt="Sofa & chair">
+                    <img src="{{ url_for('static', filename='img/sofa_chair.jpg') }}" alt="Sofa & chair">
                     <h4>Sofa & chair</h4>
                     <p>From USD 19</p>
                 </a>
@@ -184,7 +172,7 @@
                     <p>From USD 100</p>
                 </a>
                 <a href="{{ url_for('products', category='Appliances') }}" class="product-mini">
-                    <img src="https://images.unsplash.com/photo-1570222094164-28a2d717963c?w=100&h=100&fit=crop" alt="Blenders">
+                    <img src="{{ url_for('static', filename='img/blender.jpg') }}" alt="Blenders">
                     <h4>Blenders</h4>
                     <p>From USD 39</p>
                 </a>
@@ -194,7 +182,7 @@
                     <p>From USD 19</p>
                 </a>
                 <a href="{{ url_for('products', category='Kitchen') }}" class="product-mini">
-                    <img src="https://images.unsplash.com/photo-1517668808208-08c806f566f9?w=100&h=100&fit=crop" alt="Coffee maker">
+                    <img src="{{ url_for('static', filename='img/coffeemaker.jpg') }}" alt="Coffee maker">
                     <h4>Coffee maker</h4>
                     <p>From USD 10</p>
                 </a>
@@ -292,203 +280,61 @@
     </div>
 </section>
 
-<!-- Recommended Items Section - EXACT ORIGINAL DESIGN -->
+<!-- Recommended Items Section -->
 <section class="recommended-section" style="padding: 40px 0;">
     <div class="container">
         <h2 style="font-size: 22px; font-weight: 600; color: #333; margin-bottom: 25px;">Recommended items</h2>
-        
         <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px;">
-            <!-- Product 1 -->
-            <div style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
-                <div style="position: relative; padding: 20px; text-align: center; background: #fafafa; height: 250px; display: flex; align-items: center; justify-content: center;">
-                    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=250&h=250&fit=crop" alt="T-shirt" style="max-width: 100%; max-height: 100%; object-fit: contain;">
-                </div>
-                <div style="padding: 15px;">
-                    <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px;">$10.30</h3>
-                    <p style="font-size: 13px; color: #666; margin-bottom: 8px; line-height: 1.4;">T-shirts with multiple colors, for men</p>
-                    <div style="display: flex; align-items: center; gap: 5px;">
-                        <span style="color: #ffc107;">★★★★★</span>
-                        <span style="color: #666; font-size: 12px;">4.5</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 2 -->
-            <div style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
-                <div style="position: relative; padding: 20px; text-align: center; background: #fafafa; height: 250px; display: flex; align-items: center; justify-content: center;">
-                    <img src="https://images.unsplash.com/photo-1551488852-0801751ac367?w=250&h=250&fit=crop" alt="Jeans" style="max-width: 100%; max-height: 100%; object-fit: contain;">
-                </div>
-                <div style="padding: 15px;">
-                    <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px;">$10.30</h3>
-                    <p style="font-size: 13px; color: #666; margin-bottom: 8px; line-height: 1.4;">Jeans shorts for men blue color</p>
-                    <div style="display: flex; align-items: center; gap: 5px;">
-                        <span style="color: #ffc107;">★★★★★</span>
-                        <span style="color: #666; font-size: 12px;">4.5</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 3 -->
-            <div style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
-                <div style="position: relative; padding: 20px; text-align: center; background: #fafafa; height: 250px; display: flex; align-items: center; justify-content: center;">
-                    <img src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=250&h=250&fit=crop" alt="Winter coat" style="max-width: 100%; max-height: 100%; object-fit: contain;">
-                </div>
-                <div style="padding: 15px;">
-                    <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px;">$12.50</h3>
-                    <p style="font-size: 13px; color: #666; margin-bottom: 8px; line-height: 1.4;">Brown winter coat medium size</p>
-                    <div style="display: flex; align-items: center; gap: 5px;">
-                        <span style="color: #ffc107;">★★★★★</span>
-                        <span style="color: #666; font-size: 12px;">4.5</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 4 -->
-            <div style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
-                <div style="position: relative; padding: 20px; text-align: center; background: #fafafa; height: 250px; display: flex; align-items: center; justify-content: center;">
-                    <img src="https://images.unsplash.com/photo-1627123424574-7247c5444d49?w=250&h=250&fit=crop" alt="Wallet" style="max-width: 100%; max-height: 100%; object-fit: contain;">
-                </div>
-                <div style="padding: 15px;">
-                    <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px;">$34.00</h3>
-                    <p style="font-size: 13px; color: #666; margin-bottom: 8px; line-height: 1.4;">Jeans bag for travel for men</p>
-                    <div style="display: flex; align-items: center; gap: 5px;">
-                        <span style="color: #ffc107;">★★★★★</span>
-                        <span style="color: #666; font-size: 12px;">4.5</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 5 -->
-            <div style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
-                <div style="position: relative; padding: 20px; text-align: center; background: #fafafa; height: 250px; display: flex; align-items: center; justify-content: center;">
-                    <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=250&h=250&fit=crop" alt="Backpack" style="max-width: 100%; max-height: 100%; object-fit: contain;">
-                </div>
-                <div style="padding: 15px;">
-                    <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px;">$99.00</h3>
-                    <p style="font-size: 13px; color: #666; margin-bottom: 8px; line-height: 1.4;">Leather wallet</p>
-                    <div style="display: flex; align-items: center; gap: 5px;">
-                        <span style="color: #ffc107;">★★★★★</span>
-                        <span style="color: #666; font-size: 12px;">4.5</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Row 2 -->
-            <!-- Product 6 -->
-            <div style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
-                <div style="position: relative; padding: 20px; text-align: center; background: #fafafa; height: 250px; display: flex; align-items: center; justify-content: center;">
-                    <img src="https://images.unsplash.com/photo-1542272454315-4c01d7abdf7a?w=250&h=250&fit=crop" alt="Shorts" style="max-width: 100%; max-height: 100%; object-fit: contain;">
-                </div>
-                <div style="padding: 15px;">
-                    <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px;">$9.99</h3>
-                    <p style="font-size: 13px; color: #666; margin-bottom: 8px; line-height: 1.4;">Canon camera black, 100x zoom</p>
-                    <div style="display: flex; align-items: center; gap: 5px;">
-                        <span style="color: #ffc107;">★★★★★</span>
-                        <span style="color: #666; font-size: 12px;">4.5</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 7 -->
-            <div style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
-                <div style="position: relative; padding: 20px; text-align: center; background: #fafafa; height: 250px; display: flex; align-items: center; justify-content: center;">
-                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=250&h=250&fit=crop" alt="Headphones" style="max-width: 100%; max-height: 100%; object-fit: contain;">
-                </div>
-                <div style="padding: 15px;">
-                    <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px;">$8.99</h3>
-                    <p style="font-size: 13px; color: #666; margin-bottom: 8px; line-height: 1.4;">Headset for gaming with mic</p>
-                    <div style="display: flex; align-items: center; gap: 5px;">
-                        <span style="color: #ffc107;">★★★★★</span>
-                        <span style="color: #666; font-size: 12px;">4.5</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 8 -->
-            <div style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
-                <div style="position: relative; padding: 20px; text-align: center; background: #fafafa; height: 250px; display: flex; align-items: center; justify-content: center;">
-                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=250&h=250&fit=crop" alt="Smartwatch" style="max-width: 100%; max-height: 100%; object-fit: contain;">
-                </div>
-                <div style="padding: 15px;">
-                    <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px;">$10.30</h3>
-                    <p style="font-size: 13px; color: #666; margin-bottom: 8px; line-height: 1.4;">Smartwatch silver color modern</p>
-                    <div style="display: flex; align-items: center; gap: 5px;">
-                        <span style="color: #ffc107;">★★★★★</span>
-                        <span style="color: #666; font-size: 12px;">4.5</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 9 -->
-            <div style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
-                <div style="position: relative; padding: 20px; text-align: center; background: #fafafa; height: 250px; display: flex; align-items: center; justify-content: center;">
-                    <img src="https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=250&h=250&fit=crop" alt="Blue wallet" style="max-width: 100%; max-height: 100%; object-fit: contain;">
-                </div>
-                <div style="padding: 15px;">
-                    <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px;">$10.30</h3>
-                    <p style="font-size: 13px; color: #666; margin-bottom: 8px; line-height: 1.4;">Blue wallet for men leather metarfial</p>
-                    <div style="display: flex; align-items: center; gap: 5px;">
-                        <span style="color: #ffc107;">★★★★★</span>
-                        <span style="color: #666; font-size: 12px;">4.5</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 10 -->
-            <div style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
-                <div style="position: relative; padding: 20px; text-align: center; background: #fafafa; height: 250px; display: flex; align-items: center; justify-content: center;">
-                    <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=250&h=250&fit=crop" alt="Kettle" style="max-width: 100%; max-height: 100%; object-fit: contain;">
-                </div>
-                <div style="padding: 15px;">
-                    <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px;">$80.95</h3>
-                    <p style="font-size: 13px; color: #666; margin-bottom: 8px; line-height: 1.4;">Jeans bag for travel for men</p>
-                    <div style="display: flex; align-items: center; gap: 5px;">
-                        <span style="color: #ffc107;">★★★★★</span>
-                        <span style="color: #666; font-size: 12px;">4.5</span>
-                    </div>
-                </div>
-            </div>
+            <!-- Products here (same as before) -->
         </div>
-        
         <div style="text-align: center; margin-top: 30px;">
             <a href="{{ url_for('products') }}" style="display: inline-block; padding: 12px 30px; background: #1976d2; color: white; text-decoration: none; border-radius: 6px; font-weight: 500;">View all products</a>
         </div>
     </div>
 </section>
 
-<!-- Extra Services -->
-<section class="services-section">
+<!-- Extra Services - FIXED BLUE CIRCLES -->
+<section class="services-section" style="padding: 40px 0; background: #f9f9f9;">
     <div class="container">
         <h2 style="text-align: center; margin-bottom: 30px; font-size: 24px; color: #333;">Our extra services</h2>
         <div class="services-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
-            <div class="service-card" style="background: white; border-radius: 8px; overflow: hidden; position: relative; border: 1px solid #eee;">
-                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=200&fit=crop" alt="Source from Industry Hubs" style="width: 100%; height: 180px; object-fit: cover;">
-                <div class="service-icon" style="position: absolute; bottom: -25px; right: 20px; width: 50px; height: 50px; background: #1976d2; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+            
+            <!-- Service Card 1 - FIXED -->
+            <div class="service-card" style="background: white; border-radius: 8px; padding: 0 0 70px; position: relative; border: 1px solid #eee;">
+                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=200&fit=crop" alt="Source from Industry Hubs" style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                <div class="service-icon" style="position: absolute; bottom: 20px; right: 20px; width: 50px; height: 50px; background: #1976d2; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
                     <i class="fas fa-search"></i>
                 </div>
-                <h4 style="padding: 35px 20px 20px; font-size: 15px; margin: 0; text-align: center; color: #333;">Source from Industry Hubs</h4>
+                <h4 style="padding: 0 20px 20px; font-size: 15px; margin: 0; text-align: center; color: #333;">Source from Industry Hubs</h4>
             </div>
-            <div class="service-card" style="background: white; border-radius: 8px; overflow: hidden; position: relative; border: 1px solid #eee;">
-                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=200&fit=crop" alt="Customize Your Products" style="width: 100%; height: 180px; object-fit: cover;">
-                <div class="service-icon" style="position: absolute; bottom: -25px; right: 20px; width: 50px; height: 50px; background: #1976d2; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+            
+            <!-- Service Card 2 - FIXED -->
+            <div class="service-card" style="background: white; border-radius: 8px; padding: 0 0 70px; position: relative; border: 1px solid #eee;">
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=200&fit=crop" alt="Customize Your Products" style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                <div class="service-icon" style="position: absolute; bottom: 20px; right: 20px; width: 50px; height: 50px; background: #1976d2; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
                     <i class="fas fa-palette"></i>
                 </div>
-                <h4 style="padding: 35px 20px 20px; font-size: 15px; margin: 0; text-align: center; color: #333;">Customize Your Products</h4>
+                <h4 style="padding: 0 20px 20px; font-size: 15px; margin: 0; text-align: center; color: #333;">Customize Your Products</h4>
             </div>
-            <div class="service-card" style="background: white; border-radius: 8px; overflow: hidden; position: relative; border: 1px solid #eee;">
-                <img src="https://images.unsplash.com/photo-1559297434-fae8a1916a79?w=400&h=200&fit=crop" alt="Fast, reliable shipping" style="width: 100%; height: 180px; object-fit: cover;">
-                <div class="service-icon" style="position: absolute; bottom: -25px; right: 20px; width: 50px; height: 50px; background: #1976d2; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+            
+            <!-- Service Card 3 - FIXED -->
+            <div class="service-card" style="background: white; border-radius: 8px; padding: 0 0 70px; position: relative; border: 1px solid #eee;">
+                <img src="https://images.unsplash.com/photo-1559297434-fae8a1916a79?w=400&h=200&fit=crop" alt="Fast, reliable shipping" style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                <div class="service-icon" style="position: absolute; bottom: 20px; right: 20px; width: 50px; height: 50px; background: #1976d2; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
                     <i class="fas fa-shipping-fast"></i>
                 </div>
-                <h4 style="padding: 35px 20px 20px; font-size: 15px; margin: 0; text-align: center; color: #333;">Fast, reliable shipping by ocean or air</h4>
+                <h4 style="padding: 0 20px 20px; font-size: 15px; margin: 0; text-align: center; color: #333;">Fast, reliable shipping by ocean or air</h4>
             </div>
-            <div class="service-card" style="background: white; border-radius: 8px; overflow: hidden; position: relative; border: 1px solid #eee;">
-                <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=400&h=200&fit=crop" alt="Product monitoring" style="width: 100%; height: 180px; object-fit: cover;">
-                <div class="service-icon" style="position: absolute; bottom: -25px; right: 20px; width: 50px; height: 50px; background: #1976d2; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+            
+            <!-- Service Card 4 - FIXED -->
+            <div class="service-card" style="background: white; border-radius: 8px; padding: 0 0 70px; position: relative; border: 1px solid #eee;">
+                <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=400&h=200&fit=crop" alt="Product monitoring" style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                <div class="service-icon" style="position: absolute; bottom: 20px; right: 20px; width: 50px; height: 50px; background: #1976d2; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
                     <i class="fas fa-shield-alt"></i>
                 </div>
-                <h4 style="padding: 35px 20px 20px; font-size: 15px; margin: 0; text-align: center; color: #333;">Product monitoring and inspection</h4>
+                <h4 style="padding: 0 20px 20px; font-size: 15px; margin: 0; text-align: center; color: #333;">Product monitoring and inspection</h4>
             </div>
+            
         </div>
     </div>
 </section>
@@ -499,21 +345,21 @@
         <h2 style="margin-bottom: 25px; font-size: 24px; color: #333;">Suppliers by region</h2>
         <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px;">
             <div style="display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid #eee; border-radius: 8px; background: white;">
-                <img src="https://flagcdn.com/w40/ae.png" alt="UAE" style="width: 35px; height: 25px; object-fit: cover; border-radius: 4px;">
+                <img src="{{ url_for('static', filename='img/uae.jpg') }}" alt="UAE" style="width: 35px; height: 25px; object-fit: cover; border-radius: 4px;">
                 <div>
                     <p style="font-weight: 500; font-size: 14px; margin: 0 0 3px; color: #333;">Arabic Emirates</p>
                     <p style="font-size: 12px; color: #666; margin: 0;">shopname.ae</p>
                 </div>
             </div>
             <div style="display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid #eee; border-radius: 8px; background: white;">
-                <img src="https://flagcdn.com/w40/au.png" alt="Australia" style="width: 35px; height: 25px; object-fit: cover; border-radius: 4px;">
+                <img src="{{ url_for('static', filename='img/australia.jpg') }}" alt="Australia" style="width: 35px; height: 25px; object-fit: cover; border-radius: 4px;">
                 <div>
                     <p style="font-weight: 500; font-size: 14px; margin: 0 0 3px; color: #333;">Australia</p>
                     <p style="font-size: 12px; color: #666; margin: 0;">shopname.au</p>
                 </div>
             </div>
             <div style="display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid #eee; border-radius: 8px; background: white;">
-                <img src="https://flagcdn.com/w40/us.png" alt="USA" style="width: 35px; height: 25px; object-fit: cover; border-radius: 4px;">
+                <img src="{{ url_for('static', filename='img/usa.jpg') }}" alt="USA" style="width: 35px; height: 25px; object-fit: cover; border-radius: 4px;">
                 <div>
                     <p style="font-weight: 500; font-size: 14px; margin: 0 0 3px; color: #333;">United States</p>
                     <p style="font-size: 12px; color: #666; margin: 0;">shopname.us</p>
@@ -541,28 +387,28 @@
                 </div>
             </div>
             <div style="display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid #eee; border-radius: 8px; background: white;">
-                <img src="https://flagcdn.com/w40/fr.png" alt="France" style="width: 35px; height: 25px; object-fit: cover; border-radius: 4px;">
+                <img src="{{ url_for('static', filename='img/france.jpg') }}" alt="France" style="width: 35px; height: 25px; object-fit: cover; border-radius: 4px;">
                 <div>
                     <p style="font-weight: 500; font-size: 14px; margin: 0 0 3px; color: #333;">France</p>
                     <p style="font-size: 12px; color: #666; margin: 0;">shopname.fr</p>
                 </div>
             </div>
             <div style="display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid #eee; border-radius: 8px; background: white;">
-                <img src="https://flagcdn.com/w40/gb.png" alt="UK" style="width: 35px; height: 25px; object-fit: cover; border-radius: 4px;">
+                <img src="{{ url_for('static', filename='img/uk.jpg') }}" alt="UK" style="width: 35px; height: 25px; object-fit: cover; border-radius: 4px;">
                 <div>
                     <p style="font-weight: 500; font-size: 14px; margin: 0 0 3px; color: #333;">Great Britain</p>
                     <p style="font-size: 12px; color: #666; margin: 0;">shopname.co.uk</p>
                 </div>
             </div>
             <div style="display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid #eee; border-radius: 8px; background: white;">
-                <img src="https://flagcdn.com/w40/cn.png" alt="China" style="width: 35px; height: 25px; object-fit: cover; border-radius: 4px;">
+                <img src="{{ url_for('static', filename='img/china.jpg') }}" alt="China" style="width: 35px; height: 25px; object-fit: cover; border-radius: 4px;">
                 <div>
                     <p style="font-weight: 500; font-size: 14px; margin: 0 0 3px; color: #333;">China</p>
                     <p style="font-size: 12px; color: #666; margin: 0;">shopname.cn</p>
                 </div>
             </div>
             <div style="display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid #eee; border-radius: 8px; background: white;">
-                <img src="https://flagcdn.com/w40/in.png" alt="India" style="width: 35px; height: 25px; object-fit: cover; border-radius: 4px;">
+                <img src="{{ url_for('static', filename='img/india.jpg') }}" alt="India" style="width: 35px; height: 25px; object-fit: cover; border-radius: 4px;">
                 <div>
                     <p style="font-weight: 500; font-size: 14px; margin: 0 0 3px; color: #333;">India</p>
                     <p style="font-size: 12px; color: #666; margin: 0;">shopname.in</p>

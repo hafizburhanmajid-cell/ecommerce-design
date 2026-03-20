@@ -18,12 +18,10 @@
         <aside class="sidebar" style="background: white; padding: 20px; border-radius: 8px; height: fit-content;">
             <!-- Category Filter -->
             <div style="margin-bottom: 25px;">
-                <h3 style="font-size: 16px; margin-bottom: 15px; font-weight: 600; display: flex; justify-content: space-between; cursor: pointer;">
-                    Category <i class="fas fa-chevron-up"></i>
-                </h3>
+                <h3 style="font-size: 16px; margin-bottom: 15px; font-weight: 600;">Category</h3>
                 <ul style="list-style: none; padding: 0; margin: 0;">
                     <li style="margin-bottom: 10px;">
-                        <a href="{{ url_for('products') }}" style="color: {% if not request.args.get('category') %}#1976d2{% else %}#666{% endif %}; text-decoration: none; font-size: 14px;">Mobile accessory</a>
+                        <a href="{{ url_for('products') }}" style="color: {% if not request.args.get('category') %}#1976d2{% else %}#666{% endif %}; text-decoration: none; font-size: 14px;">All Products</a>
                     </li>
                     <li style="margin-bottom: 10px;">
                         <a href="{{ url_for('products', category='Electronics') }}" style="color: {% if request.args.get('category') == 'Electronics' %}#1976d2{% else %}#666{% endif %}; text-decoration: none; font-size: 14px;">Electronics</a>
@@ -31,18 +29,13 @@
                     <li style="margin-bottom: 10px;">
                         <a href="{{ url_for('products', category='Smartphones') }}" style="color: {% if request.args.get('category') == 'Smartphones' %}#1976d2{% else %}#666{% endif %}; text-decoration: none; font-size: 14px;">Smartphones</a>
                     </li>
-                    <li style="margin-bottom: 10px;">
-                        <a href="{{ url_for('products', category='Modern tech') }}" style="color: {% if request.args.get('category') == 'Modern tech' %}#1976d2{% else %}#666{% endif %}; text-decoration: none; font-size: 14px;">Modern tech</a>
-                    </li>
                     <li><a href="#" style="color: #1976d2; text-decoration: none; font-size: 14px;">See all</a></li>
                 </ul>
             </div>
 
             <!-- Brands Filter -->
             <div style="margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #eee;">
-                <h3 style="font-size: 16px; margin-bottom: 15px; font-weight: 600; display: flex; justify-content: space-between; cursor: pointer;">
-                    Brands <i class="fas fa-chevron-up"></i>
-                </h3>
+                <h3 style="font-size: 16px; margin-bottom: 15px; font-weight: 600;">Brands</h3>
                 <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; cursor: pointer;">
                     <input type="checkbox" style="cursor: pointer;">
                     <span style="font-size: 14px; color: #333;">Samsung</span>
@@ -55,88 +48,48 @@
                     <input type="checkbox" style="cursor: pointer;">
                     <span style="font-size: 14px; color: #333;">Huawei</span>
                 </label>
-                <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; cursor: pointer;">
-                    <input type="checkbox" style="cursor: pointer;">
-                    <span style="font-size: 14px; color: #333;">Pocco</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; cursor: pointer;">
-                    <input type="checkbox" style="cursor: pointer;">
-                    <span style="font-size: 14px; color: #333;">Lenovo</span>
-                </label>
                 <a href="#" style="color: #1976d2; text-decoration: none; font-size: 14px;">See all</a>
             </div>
 
-            <!-- Features Filter -->
+            <!-- Price Range - FINAL FIXED (No Overflow) -->
             <div style="margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #eee;">
-                <h3 style="font-size: 16px; margin-bottom: 15px; font-weight: 600; display: flex; justify-content: space-between; cursor: pointer;">
-                    Features <i class="fas fa-chevron-up"></i>
-                </h3>
-                <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; cursor: pointer;">
-                    <input type="checkbox" style="cursor: pointer;">
-                    <span style="font-size: 14px; color: #333;">Metallic</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; cursor: pointer;">
-                    <input type="checkbox" style="cursor: pointer;">
-                    <span style="font-size: 14px; color: #333;">Plastic cover</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; cursor: pointer;">
-                    <input type="checkbox" style="cursor: pointer;">
-                    <span style="font-size: 14px; color: #333;">8GB Ram</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; cursor: pointer;">
-                    <input type="checkbox" style="cursor: pointer;">
-                    <span style="font-size: 14px; color: #333;">Super power</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; cursor: pointer;">
-                    <input type="checkbox" style="cursor: pointer;">
-                    <span style="font-size: 14px; color: #333;">Large Memory</span>
-                </label>
-                <a href="#" style="color: #1976d2; text-decoration: none; font-size: 14px;">See all</a>
-            </div>
-
-            <!-- Price Range -->
-            <div style="margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #eee;">
-                <h3 style="font-size: 16px; margin-bottom: 15px; font-weight: 600; display: flex; justify-content: space-between; cursor: pointer;">
-                    Price range <i class="fas fa-chevron-down"></i>
-                </h3>
+                <h3 style="font-size: 16px; margin-bottom: 15px; font-weight: 600;">Price range</h3>
+                
+                <!-- Slider -->
                 <div style="margin-bottom: 15px;">
                     <input type="range" min="0" max="1000" value="500" style="width: 100%;">
                 </div>
-                <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-                    <input type="number" placeholder="Min" style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
-                    <input type="number" placeholder="Max" style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+                
+                <!-- Min/Max Inputs - FIXED -->
+                <div style="display: flex; gap: 10px; margin-bottom: 10px; min-width: 0;">
+                    <input type="number" placeholder="Min" 
+                           style="width: 50%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; box-sizing: border-box; min-width: 0;">
+                    <input type="number" placeholder="Max" 
+                           style="width: 50%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; box-sizing: border-box; min-width: 0;">
                 </div>
-                <button style="width: 100%; padding: 10px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">Apply</button>
+                
+                <!-- Apply Button -->
+                <button style="width: 100%; padding: 10px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
+                    Apply
+                </button>
             </div>
 
             <!-- Condition -->
             <div style="margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #eee;">
-                <h3 style="font-size: 16px; margin-bottom: 15px; font-weight: 600; display: flex; justify-content: space-between; cursor: pointer;">
-                    Condition <i class="fas fa-chevron-down"></i>
-                </h3>
+                <h3 style="font-size: 16px; margin-bottom: 15px; font-weight: 600;">Condition</h3>
                 <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; cursor: pointer;">
                     <input type="radio" name="condition" checked style="cursor: pointer;">
                     <span style="font-size: 14px; color: #333;">Any</span>
                 </label>
                 <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; cursor: pointer;">
                     <input type="radio" name="condition" style="cursor: pointer;">
-                    <span style="font-size: 14px; color: #333;">Refurbished</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; cursor: pointer;">
-                    <input type="radio" name="condition" style="cursor: pointer;">
                     <span style="font-size: 14px; color: #333;">Brand new</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; cursor: pointer;">
-                    <input type="radio" name="condition" style="cursor: pointer;">
-                    <span style="font-size: 14px; color: #333;">Old items</span>
                 </label>
             </div>
 
             <!-- Ratings -->
             <div style="margin-bottom: 25px;">
-                <h3 style="font-size: 16px; margin-bottom: 15px; font-weight: 600; display: flex; justify-content: space-between; cursor: pointer;">
-                    Ratings <i class="fas fa-chevron-down"></i>
-                </h3>
+                <h3 style="font-size: 16px; margin-bottom: 15px; font-weight: 600;">Ratings</h3>
                 <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; cursor: pointer;">
                     <input type="checkbox" style="cursor: pointer;">
                     <span style="color: #ffc107;">★★★★★</span>
@@ -145,29 +98,17 @@
                     <input type="checkbox" style="cursor: pointer;">
                     <span style="color: #ffc107;">★★★★☆</span>
                 </label>
-                <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; cursor: pointer;">
-                    <input type="checkbox" style="cursor: pointer;">
-                    <span style="color: #ffc107;">★★★☆☆</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; cursor: pointer;">
-                    <input type="checkbox" style="cursor: pointer;">
-                    <span style="color: #ffc107;">★★☆☆☆</span>
-                </label>
             </div>
         </aside>
 
         <!-- Products Grid -->
         <main>
             <!-- Header -->
-            <div style="background: white; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="background: white; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
                 <p style="margin: 0; font-size: 14px;">
-                    <strong>{{ products|length }}</strong> items in <strong>{{ request.args.get('category', 'Mobile accessory') }}</strong>
+                    <strong>{{ products|length }}</strong> items found
                 </p>
-                <div style="display: flex; align-items: center; gap: 15px;">
-                    <label style="display: flex; align-items: center; gap: 5px; font-size: 14px; cursor: pointer;">
-                        <input type="checkbox" style="cursor: pointer;">
-                        <span>Verified only</span>
-                    </label>
+                <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
                     <select style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
                         <option>Featured</option>
                         <option>Price: Low to High</option>
@@ -189,7 +130,7 @@
             {% if products %}
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
                 {% for product in products %}
-                <div style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #eee; transition: box-shadow 0.3s;">
+                <div style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #eee;">
                     <div style="position: relative; padding: 20px; text-align: center; background: #fafafa; height: 250px; display: flex; align-items: center; justify-content: center;">
                         <img src="{{ url_for('static', filename='img/' + product.image) if product.image else 'https://via.placeholder.com/250x250' }}" 
                              alt="{{ product.name }}" 
@@ -201,9 +142,6 @@
                     <div style="padding: 15px;">
                         <div style="margin-bottom: 8px;">
                             <span style="font-size: 18px; font-weight: bold; color: #333;">${{ product.price }}</span>
-                            {% if product.old_price %}
-                            <span style="font-size: 14px; color: #999; text-decoration: line-through; margin-left: 8px;">${{ product.old_price }}</span>
-                            {% endif %}
                         </div>
                         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
                             <span style="color: #ffc107;">
@@ -219,7 +157,7 @@
                         </div>
                         <h3 style="font-size: 14px; color: #666; margin: 0 0 10px; line-height: 1.4;">{{ product.name }}</h3>
                         
-                        <!-- ✅ ADD TO CART BUTTON -->
+                        <!-- Add to Cart Button -->
                         <button onclick="addToCart({{ product.id }})" 
                                 style="width: 100%; padding: 10px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 8px;">
                             <i class="fas fa-shopping-cart"></i> Add to cart
@@ -235,8 +173,8 @@
             </div>
 
             <!-- Pagination -->
-            <div style="display: flex; align-items: center; justify-content: flex-end; gap: 15px; margin-top: 30px;">
-                <span style="font-size: 14px;">Show 10</span>
+            <div style="display: flex; align-items: center; justify-content: flex-end; gap: 15px; margin-top: 30px; flex-wrap: wrap;">
+                <span style="font-size: 14px;">Show</span>
                 <select style="padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
                     <option>10</option>
                     <option>20</option>
@@ -254,7 +192,7 @@
             <div style="text-align: center; padding: 60px 20px; background: white; border-radius: 8px;">
                 <i class="fas fa-box-open" style="font-size: 80px; color: #ddd; margin-bottom: 20px;"></i>
                 <h3 style="color: #666; margin-bottom: 10px;">No products found</h3>
-                <p style="color: #999;">Try adjusting your filters or check back later for new items.</p>
+                <p style="color: #999;">Try adjusting your filters or check back later.</p>
             </div>
             {% endif %}
         </main>
@@ -264,36 +202,34 @@
 
 {% block scripts %}
 <script>
-// Add to Cart Function
+// Add to Cart Function - ES5 Compatible
 function addToCart(productId) {
-    fetch(`/add_to_cart/${productId}`, {
+    fetch('/add_to_cart/' + productId, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({quantity: 1})
     })
-    .then(response => response.json())
-    .then(data => {
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
         if (data.success) {
-            // Show success message
-            alert('✅ Product added to cart!');
-            
-            // Update cart count in header
-            const cartCount = document.getElementById('cart-count');
+            alert('Product added to cart!');
+            var cartCount = document.getElementById('cart-count');
             if (cartCount) {
-                let currentCount = parseInt(cartCount.innerText) || 0;
+                var currentCount = parseInt(cartCount.innerText) || 0;
                 cartCount.innerText = currentCount + 1;
             }
         } else {
-            // Redirect to login if not logged in
-            alert('🔐 Please login to add items to cart');
+            alert('Please login to add items to cart');
             window.location.href = '/login';
         }
     })
-    .catch(error => {
+    .catch(function(error) {
         console.error('Error:', error);
-        alert('❌ Error adding to cart. Please try again.');
+        alert('Error adding to cart');
     });
 }
 </script>

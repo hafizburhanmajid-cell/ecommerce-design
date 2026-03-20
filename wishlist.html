@@ -68,7 +68,7 @@
 <script>
 function removeFromWishlist(productId) {
     if (confirm('Remove from wishlist?')) {
-        fetch(`/remove_from_wishlist/${productId}`, {
+        fetch('/remove_from_wishlist/' + productId, {
             method: 'POST'
         })
         .then(response => response.json())
@@ -76,25 +76,37 @@ function removeFromWishlist(productId) {
             if (data.success) {
                 location.reload();
             }
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
     }
 }
 
 function addToCart(productId) {
-    fetch(`/add_to_cart/${productId}`, {
+    fetch('/add_to_cart/' + productId, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify({quantity: 1})
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert('✅ Added to cart!');
+            alert(' Added to cart!');
             const cartCount = document.getElementById('cart-count');
             if (cartCount) {
-                cartCount.innerText = parseInt(cartCount.innerText) + 1;
+                const currentCount = parseInt(cartCount.innerText) || 0;
+                cartCount.innerText = currentCount + 1;
             }
+        } else {
+            alert('Please login to add items to cart');
+            window.location.href = '/login';
         }
+    })
+    .catch(error => {
+        console.error('Error:', error);
     });
 }
 </script>
