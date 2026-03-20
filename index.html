@@ -280,12 +280,172 @@
     </div>
 </section>
 
-<!-- Recommended Items Section -->
+<!-- Recommended Items Section - WITH ADD TO CART BUTTONS -->
 <section class="recommended-section" style="padding: 40px 0;">
     <div class="container">
         <h2 style="font-size: 22px; font-weight: 600; color: #333; margin-bottom: 25px;">Recommended items</h2>
         <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px;">
-            <!-- Products here (same as before) -->
+            
+            <!-- Product 1 -->
+            <div style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
+                <div style="position: relative; padding: 20px; text-align: center; background: #fafafa; height: 250px; display: flex; align-items: center; justify-content: center;">
+                    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=250&h=250&fit=crop" alt="T-shirt" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+                <div style="padding: 15px;">
+                    <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px;">$10.30</h3>
+                    <p style="font-size: 13px; color: #666; margin-bottom: 8px; line-height: 1.4;">T-shirts with multiple colors, for men</p>
+                    <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 12px;">
+                        <span style="color: #ffc107;">★★★★★</span>
+                        <span style="color: #666; font-size: 12px;">4.5</span>
+                    </div>
+                    <button onclick="addToCart(1)" style="width: 100%; padding: 12px; background: #1976d2; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500;">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Product 2 -->
+            <div style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
+                <div style="position: relative; padding: 20px; text-align: center; background: #fafafa; height: 250px; display: flex; align-items: center; justify-content: center;">
+                    <img src="{{ url_for('static', filename='img/jeans.jpg') }}" alt="Jeans" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+                <div style="padding: 15px;">
+                    <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px;">$10.30</h3>
+                    <p style="font-size: 13px; color: #666; margin-bottom: 8px; line-height: 1.4;">Jeans shorts for men blue color</p>
+                    <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 12px;">
+                        <span style="color: #ffc107;">★★★★★</span>
+                        <span style="color: #666; font-size: 12px;">4.5</span>
+                    </div>
+                    <button onclick="addToCart(2)" style="width: 100%; padding: 12px; background: #1976d2; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500;">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Product 3 -->
+            <div style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
+                <div style="position: relative; padding: 20px; text-align: center; background: #fafafa; height: 250px; display: flex; align-items: center; justify-content: center;">
+                    <img src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=250&h=250&fit=crop" alt="Winter coat" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+                <div style="padding: 15px;">
+                    <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px;">$12.50</h3>
+                    <p style="font-size: 13px; color: #666; margin-bottom: 8px; line-height: 1.4;">Brown winter coat medium size</p>
+                    <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 12px;">
+                        <span style="color: #ffc107;">★★★★★</span>
+                        <span style="color: #666; font-size: 12px;">4.5</span>
+                    </div>
+                    <button onclick="addToCart(3)" style="width: 100%; padding: 12px; background: #1976d2; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500;">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Product 4 -->
+            <div style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
+                <div style="position: relative; padding: 20px; text-align: center; background: #fafafa; height: 250px; display: flex; align-items: center; justify-content: center;">
+                    <img src="{{ url_for('static', filename='img/wallet.jpg') }}" alt="Wallet" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+                <div style="padding: 15px;">
+                    <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px;">$34.00</h3>
+                    <p style="font-size: 13px; color: #666; margin-bottom: 8px; line-height: 1.4;">Jeans bag for travel for men</p>
+                    <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 12px;">
+                        <span style="color: #ffc107;">★★★★★</span>
+                        <span style="color: #666; font-size: 12px;">4.5</span>
+                    </div>
+                    <button onclick="addToCart(4)" style="width: 100%; padding: 12px; background: #1976d2; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500;">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Product 5 -->
+            <div style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
+                <div style="position: relative; padding: 20px; text-align: center; background: #fafafa; height: 250px; display: flex; align-items: center; justify-content: center;">
+                    <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=250&h=250&fit=crop" alt="Backpack" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+                <div style="padding: 15px;">
+                    <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px;">$99.00</h3>
+                    <p style="font-size: 13px; color: #666; margin-bottom: 8px; line-height: 1.4;">Leather wallet</p>
+                    <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 12px;">
+                        <span style="color: #ffc107;">★★★★★</span>
+                        <span style="color: #666; font-size: 12px;">4.5</span>
+                    </div>
+                    <button onclick="addToCart(5)" style="width: 100%; padding: 12px; background: #1976d2; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500;">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Product 6 -->
+            <div style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
+                <div style="position: relative; padding: 20px; text-align: center; background: #fafafa; height: 250px; display: flex; align-items: center; justify-content: center;">
+                    <img src="{{ url_for('static', filename='img/shorts.jpg') }}" alt="Shorts" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+                <div style="padding: 15px;">
+                    <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px;">$9.99</h3>
+                    <p style="font-size: 13px; color: #666; margin-bottom: 8px; line-height: 1.4;">Canon camera black, 100x zoom</p>
+                    <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 12px;">
+                        <span style="color: #ffc107;">★★★★★</span>
+                        <span style="color: #666; font-size: 12px;">4.5</span>
+                    </div>
+                    <button onclick="addToCart(6)" style="width: 100%; padding: 12px; background: #1976d2; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500;">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Product 7 -->
+            <div style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
+                <div style="position: relative; padding: 20px; text-align: center; background: #fafafa; height: 250px; display: flex; align-items: center; justify-content: center;">
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=250&h=250&fit=crop" alt="Headphones" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+                <div style="padding: 15px;">
+                    <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px;">$8.99</h3>
+                    <p style="font-size: 13px; color: #666; margin-bottom: 8px; line-height: 1.4;">Headset for gaming with mic</p>
+                    <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 12px;">
+                        <span style="color: #ffc107;">★★★★★</span>
+                        <span style="color: #666; font-size: 12px;">4.5</span>
+                    </div>
+                    <button onclick="addToCart(7)" style="width: 100%; padding: 12px; background: #1976d2; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500;">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Product 8 -->
+            <div style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
+                <div style="position: relative; padding: 20px; text-align: center; background: #fafafa; height: 250px; display: flex; align-items: center; justify-content: center;">
+                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=250&h=250&fit=crop" alt="Smartwatch" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+                <div style="padding: 15px;">
+                    <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px;">$10.30</h3>
+                    <p style="font-size: 13px; color: #666; margin-bottom: 8px; line-height: 1.4;">Smartwatch silver color modern</p>
+                    <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 12px;">
+                        <span style="color: #ffc107;">★★★★★</span>
+                        <span style="color: #666; font-size: 12px;">4.5</span>
+                    </div>
+                    <button onclick="addToCart(8)" style="width: 100%; padding: 12px; background: #1976d2; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500;">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Product 9 -->
+            <div style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
+                <div style="position: relative; padding: 20px; text-align: center; background: #fafafa; height: 250px; display: flex; align-items: center; justify-content: center;">
+                    <img src="https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=250&h=250&fit=crop" alt="Blue wallet" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+                <div style="padding: 15px;">
+                    <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px;">$10.30</h3>
+                    <p style="font-size: 13px; color: #666; margin-bottom: 8px; line-height: 1.4;">Blue wallet for men leather material</p>
+                    <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 12px;">
+                        <span style="color: #ffc107;">★★★★★</span>
+                        <span style="color: #666; font-size: 12px;">4.5</span>
+                    </div>
+                    <button onclick="addToCart(9)" style="width: 100%; padding: 12px; background: #1976d2; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500;">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Product 10 -->
+            <div style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
+                <div style="position: relative; padding: 20px; text-align: center; background: #fafafa; height: 250px; display: flex; align-items: center; justify-content: center;">
+                    <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=250&h=250&fit=crop" alt="Kettle" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+                <div style="padding: 15px;">
+                    <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px;">$80.95</h3>
+                    <p style="font-size: 13px; color: #666; margin-bottom: 8px; line-height: 1.4;">Electric kettle stainless steel</p>
+                    <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 12px;">
+                        <span style="color: #ffc107;">★★★★★</span>
+                        <span style="color: #666; font-size: 12px;">4.5</span>
+                    </div>
+                    <button onclick="addToCart(10)" style="width: 100%; padding: 12px; background: #1976d2; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500;">Add to Cart</button>
+                </div>
+            </div>
+            
         </div>
         <div style="text-align: center; margin-top: 30px;">
             <a href="{{ url_for('products') }}" style="display: inline-block; padding: 12px 30px; background: #1976d2; color: white; text-decoration: none; border-radius: 6px; font-weight: 500;">View all products</a>
@@ -299,7 +459,7 @@
         <h2 style="text-align: center; margin-bottom: 30px; font-size: 24px; color: #333;">Our extra services</h2>
         <div class="services-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
             
-            <!-- Service Card 1 - FIXED -->
+            <!-- Service Card 1 -->
             <div class="service-card" style="background: white; border-radius: 8px; padding: 0 0 70px; position: relative; border: 1px solid #eee;">
                 <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=200&fit=crop" alt="Source from Industry Hubs" style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px 8px 0 0;">
                 <div class="service-icon" style="position: absolute; bottom: 20px; right: 20px; width: 50px; height: 50px; background: #1976d2; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
@@ -308,7 +468,7 @@
                 <h4 style="padding: 0 20px 20px; font-size: 15px; margin: 0; text-align: center; color: #333;">Source from Industry Hubs</h4>
             </div>
             
-            <!-- Service Card 2 - FIXED -->
+            <!-- Service Card 2 -->
             <div class="service-card" style="background: white; border-radius: 8px; padding: 0 0 70px; position: relative; border: 1px solid #eee;">
                 <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=200&fit=crop" alt="Customize Your Products" style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px 8px 0 0;">
                 <div class="service-icon" style="position: absolute; bottom: 20px; right: 20px; width: 50px; height: 50px; background: #1976d2; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
@@ -317,7 +477,7 @@
                 <h4 style="padding: 0 20px 20px; font-size: 15px; margin: 0; text-align: center; color: #333;">Customize Your Products</h4>
             </div>
             
-            <!-- Service Card 3 - FIXED -->
+            <!-- Service Card 3 -->
             <div class="service-card" style="background: white; border-radius: 8px; padding: 0 0 70px; position: relative; border: 1px solid #eee;">
                 <img src="https://images.unsplash.com/photo-1559297434-fae8a1916a79?w=400&h=200&fit=crop" alt="Fast, reliable shipping" style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px 8px 0 0;">
                 <div class="service-icon" style="position: absolute; bottom: 20px; right: 20px; width: 50px; height: 50px; background: #1976d2; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
@@ -326,7 +486,7 @@
                 <h4 style="padding: 0 20px 20px; font-size: 15px; margin: 0; text-align: center; color: #333;">Fast, reliable shipping by ocean or air</h4>
             </div>
             
-            <!-- Service Card 4 - FIXED -->
+            <!-- Service Card 4 -->
             <div class="service-card" style="background: white; border-radius: 8px; padding: 0 0 70px; position: relative; border: 1px solid #eee;">
                 <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=400&h=200&fit=crop" alt="Product monitoring" style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px 8px 0 0;">
                 <div class="service-icon" style="position: absolute; bottom: 20px; right: 20px; width: 50px; height: 50px; background: #1976d2; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
